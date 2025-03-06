@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:midilink/features/authentication/screens/signup/signup.dart';
-import 'package:midilink/utils/helpers/helper_functions.dart';
+import 'package:midilink/navigation_menu.dart';
 
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -95,7 +95,9 @@ class TLoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => () {},
+                onPressed: () {
+                  Get.to(() => const NavigationMenu());
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: TColors.primary,
                   padding: EdgeInsets.symmetric(vertical: 15),
