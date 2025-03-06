@@ -49,6 +49,66 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `choose your product`
+  String get onBoarding_first_page_title {
+    return Intl.message(
+      'choose your product',
+      name: 'onBoarding_first_page_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome to a World of Limitless Choices - Your Perfect Product Awaits!`
+  String get onBoarding_first_page_subtitle {
+    return Intl.message(
+      'Welcome to a World of Limitless Choices - Your Perfect Product Awaits!',
+      name: 'onBoarding_first_page_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Payment Method`
+  String get onBoarding_second_page_title {
+    return Intl.message(
+      'Select Payment Method',
+      name: 'onBoarding_second_page_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For Seamless Transactions, Choose Your Payment Path - Your Convenience, Our Priority!`
+  String get onBoarding_second_page_subtitle {
+    return Intl.message(
+      'For Seamless Transactions, Choose Your Payment Path - Your Convenience, Our Priority!',
+      name: 'onBoarding_second_page_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deliver at your door step`
+  String get onBoarding_third_page_title {
+    return Intl.message(
+      'Deliver at your door step',
+      name: 'onBoarding_third_page_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From Our Doorstep to Yours - Swift, Secure, and Contactless Delivery!`
+  String get onBoarding_third_page_subtitle {
+    return Intl.message(
+      'From Our Doorstep to Yours - Swift, Secure, and Contactless Delivery!',
+      name: 'onBoarding_third_page_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

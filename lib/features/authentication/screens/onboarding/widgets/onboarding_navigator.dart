@@ -22,7 +22,7 @@ class OnBoardNavigation extends StatelessWidget {
       left: TSizes.defaultSpace,
       child: SmoothPageIndicator(
         effect: ExpandingDotsEffect(
-            activeDotColor: isDark ? TColors.dark : TColors.light, dotHeight: 6),
+            activeDotColor: TColors.primary , dotHeight: 6),
         controller: controller.pagecontroller,
         onDotClicked: controller.dotNavigationClick,
         count: 3,

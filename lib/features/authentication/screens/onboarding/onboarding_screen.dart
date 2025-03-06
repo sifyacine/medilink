@@ -6,12 +6,13 @@ import 'package:midilink/features/authentication/screens/onboarding/widgets/onbo
 import 'package:midilink/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
 import 'package:midilink/features/authentication/screens/onboarding/widgets/onboarding_skip.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../controllers/onboarding/onboarding_controller.dart';
 
 
 class OnBoardingScreen extends StatelessWidget {
-  const OnBoardingScreen({Key? key}) : super(key: key);
+  const OnBoardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +25,20 @@ class OnBoardingScreen extends StatelessWidget {
           PageView(
             controller: controller.pagecontroller,
             onPageChanged: controller.updatePageIndicator,
-            children: const [
+            children: [
               OnBoardingPage(
-                title: "",
-                subtitle: "",
+                title: S.of(context).onBoarding_first_page_title,
+                subtitle: S.of(context).onBoarding_second_page_subtitle,
                 name: TImages.onBoardingImage1,
               ),
               OnBoardingPage(
-                title: "",
-                subtitle: "",
+                title: S.of(context).onBoarding_second_page_title,
+                subtitle: S.of(context).onBoarding_second_page_subtitle,
                 name: TImages.onBoardingImage2,
               ),
               OnBoardingPage(
-                title: "",
-                subtitle: "",
+                title: S.of(context).onBoarding_third_page_title,
+                subtitle: S.of(context).onBoarding_third_page_subtitle,
                 name: TImages.onBoardingImage3,
               ),
             ],

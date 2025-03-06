@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:midilink/features/authentication/screens/onboarding/onboarding_screen.dart';
+import 'package:midilink/utils/constants/colors.dart';
 import 'package:midilink/utils/theme/theme.dart';
 
 import 'features/personalization/controllers/settings_controller.dart';
-
+import 'generated/l10n.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,9 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       locale: Locale(settingsController.selectedLanguageCode.value),  // Dynamic locale
-      fallbackLocale: const Locale('en', 'US'),  // Default fallback locale
+      fallbackLocale: Locale('en', 'US'),  // Default fallback locale
       localizationsDelegates: const [
+        S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -30,7 +33,7 @@ class App extends StatelessWidget {
         Locale('fr', 'FR'),
         Locale('ar', 'AR'),
       ],
-      home: Container(),
+      home: const OnBoardingScreen(),
     ));
   }
 }
