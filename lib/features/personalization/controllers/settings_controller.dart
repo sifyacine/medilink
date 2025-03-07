@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsController extends GetxController {
-  var selectedLanguageCode = 'en_US'.obs;  // Default to English
+  var selectedLanguageCode = 'en_US'.obs; // Default to English
   var selectedThemeMode = ThemeMode.system.obs; // Default to follow system theme
 
   @override
@@ -12,15 +12,16 @@ class SettingsController extends GetxController {
     _loadSettings(); // Load settings from storage on initialization
   }
 
-  void updateLanguage(String languageCode) async {
+  Future<void> updateLanguage(String languageCode) async {
     selectedLanguageCode.value = languageCode;
-    Get.updateLocale(Locale(languageCode.split('_').first, languageCode.split('_').last));
-    _saveSettings(); // Save settings
+    final parts = languageCode.split('_');
+    Get.updateLocale(Locale(parts.first, parts.last));
+    await _saveSettings(); // Save settings
   }
 
-  void updateThemeMode(ThemeMode mode) async {
+  Future<void> updateThemeMode(ThemeMode mode) async {
     selectedThemeMode.value = mode;
-    _saveSettings(); // Save settings
+    await _saveSettings(); // Save settings
   }
 
   Future<void> _loadSettings() async {
@@ -29,7 +30,8 @@ class SettingsController extends GetxController {
     // Load language code
     final languageCode = prefs.getString('languageCode') ?? 'en_US';
     selectedLanguageCode.value = languageCode;
-    Get.updateLocale(Locale(languageCode.split('_').first, languageCode.split('_').last));
+    final parts = languageCode.split('_');
+    Get.updateLocale(Locale(parts.first, parts.last));
 
     // Load theme mode
     final themeIndex = prefs.getInt('themeMode') ?? ThemeMode.system.index;
@@ -44,5 +46,73 @@ class SettingsController extends GetxController {
 
     // Save theme mode
     await prefs.setInt('themeMode', selectedThemeMode.value.index);
+  }
+
+  void showLanguageBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('English'),
+              onTap: () {
+                updateLanguage('en_US');
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('French'),
+              onTap: () {
+                updateLanguage('fr_FR');
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Arabic'),
+              onTap: () {
+                updateLanguage('ar_AR');
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showThemeModeBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('Follow System'),
+              onTap: () {
+                updateThemeMode(ThemeMode.system);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Dark Mode'),
+              onTap: () {
+                updateThemeMode(ThemeMode.dark);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Light Mode'),
+              onTap: () {
+                updateThemeMode(ThemeMode.light);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
