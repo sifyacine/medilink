@@ -4,6 +4,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:midilink/utils/constants/colors.dart';
 import 'package:midilink/utils/helpers/helper_functions.dart';
 
+import 'features/chat/screens/main_chat/conversations_page.dart';
+import 'features/main_pages/screens/apointments/planning_page.dart';
+import 'features/main_pages/screens/home/home.dart';
 import 'features/personalization/screens/profile/profile_screen.dart';
 
 class NavigationMenu extends StatelessWidget {
@@ -37,13 +40,14 @@ class NavigationMenu extends StatelessWidget {
               label: '', // No label
             ),
             BottomNavigationBarItem(
-              icon: Icon(Iconsax.calendar),
-              label: '', // No label
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Iconsax.message),
               label: '', // No label
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Iconsax.calendar),
+              label: '', // No label
+            ),
+
             BottomNavigationBarItem(
               icon: Icon(Iconsax.user),
               label: '', // No label
@@ -60,42 +64,9 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
 
   final screens = [
-    const HomeScreen(),
-    const MessagesScreen(),
-    const CalendarScreen(),
+    HomeScreen(),
+    MessagesPage(),
+    const PlanningScreen(),
     const ProfileScreen(),
   ];
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text("🏠 Home Screen"),
-    );
-  }
-}
-
-class MessagesScreen extends StatelessWidget {
-  const MessagesScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text("📩 Messages Screen"),
-    );
-  }
-}
-
-class CalendarScreen extends StatelessWidget {
-  const CalendarScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text("📅 Calendar Screen"),
-    );
-  }
 }

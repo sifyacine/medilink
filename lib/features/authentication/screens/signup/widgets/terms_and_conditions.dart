@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/sizes.dart';
-import '../../../../../utils/constants/text_strings.dart';
-import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../controllers/signup/signup_controller.dart';
 
 class TermsAndConditions extends StatelessWidget {
@@ -35,7 +32,7 @@ class TermsAndConditions extends StatelessWidget {
                 onTap: () {
                   // Handle Terms of Use Click
                 },
-                child: Text(
+                child: const Text(
                   "Terms of Use",
                   style: TextStyle(fontSize: 12, color: TColors.primary, fontWeight: FontWeight.bold),
                 ),
@@ -48,7 +45,7 @@ class TermsAndConditions extends StatelessWidget {
                 onTap: () {
                   // Handle Privacy Policy Click
                 },
-                child: Text(
+                child: const Text(
                   "Privacy Policy",
                   style: TextStyle(fontSize: 12, color: TColors.primary, fontWeight: FontWeight.bold),
                 ),

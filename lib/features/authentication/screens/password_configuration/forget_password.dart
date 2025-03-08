@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:midilink/features/authentication/screens/password_configuration/reset_password.dart';
 
+import '../../../../common/widgets/custom_shapes/containers/animated_container_tabbar.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
@@ -35,15 +36,16 @@ class ForgetPassword extends StatelessWidget {
               Text(
                 "Enter your email or phone number, and we will send you a confirmation code.",
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
-                ),
+                      color:
+                          isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+                    ),
                 textAlign: TextAlign.start,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Toggle for Email/Phone selection
               Obx(
-                    () => Container(
+                () => Container(
                   decoration: BoxDecoration(
                     color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(TSizes.borderRadiusMd),
@@ -51,59 +53,19 @@ class ForgetPassword extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: GestureDetector(
-                          onTap: () => controller.isEmailSelected.value = true,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            decoration: BoxDecoration(
-                              color: controller.isEmailSelected.value
-                                  ? TColors.primary
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(TSizes.borderRadiusMd),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Email",
-                                style: TextStyle(
-                                  color: controller.isEmailSelected.value
-                                      ? Colors.white
-                                      : isDark
-                                      ? Colors.grey.shade400
-                                      : Colors.grey.shade700,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
+                        child: SelectableOption(
+                          title: "Email",
+                          isSelected: controller.isEmailSelected.value,
+                          onTap: controller
+                              .selectEmail, // Use the controller method
                         ),
                       ),
                       Expanded(
-                        child: GestureDetector(
-                          onTap: () => controller.isEmailSelected.value = false,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            decoration: BoxDecoration(
-                              color: !controller.isEmailSelected.value
-                                  ? TColors.primary
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(TSizes.borderRadiusMd),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Phone",
-                                style: TextStyle(
-                                  color: !controller.isEmailSelected.value
-                                      ? Colors.white
-                                      : isDark
-                                      ? Colors.grey.shade400
-                                      : Colors.grey.shade700,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
+                        child: SelectableOption(
+                          title: "Phone",
+                          isSelected: controller.isPhoneSelected.value,
+                          // Different boolean
+                          onTap: controller.selectPhone, // Different handler
                         ),
                       ),
                     ],
@@ -116,7 +78,7 @@ class ForgetPassword extends StatelessWidget {
               Form(
                 key: controller.forgetPasswordFormKey,
                 child: Obx(
-                      () => TextFormField(
+                  () => TextFormField(
                     controller: controller.isEmailSelected.value
                         ? controller.email
                         : controller.phone,
@@ -126,21 +88,30 @@ class ForgetPassword extends StatelessWidget {
                     keyboardType: controller.isEmailSelected.value
                         ? TextInputType.emailAddress
                         : TextInputType.phone,
-                    style: TextStyle(color: isDark ? Colors.white : Colors.black),
+                    style:
+                        TextStyle(color: isDark ? Colors.white : Colors.black),
                     decoration: InputDecoration(
                       hintText: controller.isEmailSelected.value
                           ? "Enter your email"
                           : "Enter your phone number",
-                      hintStyle: TextStyle(color: isDark ? Colors.grey.shade500 : Colors.grey.shade600),
+                      hintStyle: TextStyle(
+                          color: isDark
+                              ? Colors.grey.shade500
+                              : Colors.grey.shade600),
                       filled: true,
-                      fillColor: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
+                      fillColor:
+                          isDark ? Colors.grey.shade800 : Colors.grey.shade100,
                       prefixIcon: Icon(
-                        controller.isEmailSelected.value ? Iconsax.message : Iconsax.call,
+                        controller.isEmailSelected.value
+                            ? Iconsax.message
+                            : Iconsax.call,
                         color: TColors.primary,
                       ),
-                      suffixIcon: const Icon(Iconsax.check, color: TColors.primary),
+                      suffixIcon:
+                          const Icon(Iconsax.check, color: TColors.primary),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(TSizes.borderRadiusMd),
+                        borderRadius:
+                            BorderRadius.circular(TSizes.borderRadiusMd),
                         borderSide: BorderSide.none,
                       ),
                     ),
@@ -157,11 +128,13 @@ class ForgetPassword extends StatelessWidget {
                     backgroundColor: TColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(TSizes.borderRadiusMd),
+                      borderRadius:
+                          BorderRadius.circular(TSizes.borderRadiusMd),
                     ),
                   ),
                   onPressed: () {
-                    Get.off(() => const ResetPassword(email: "ycn585@gmail.com"));
+                    Get.off(
+                        () => const ResetPassword(email: "ycn585@gmail.com"));
                   },
                   child: const Text(
                     "Reset Password",

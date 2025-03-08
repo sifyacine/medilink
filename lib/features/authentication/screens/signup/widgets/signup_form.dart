@@ -64,7 +64,7 @@ class SignUpForm extends StatelessWidget {
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           /// Terms and Conditions
-          TermsAndConditions(),
+          const TermsAndConditions(),
           const SizedBox(height: TSizes.spaceBtwSections),
 
           /// Sign Up Button

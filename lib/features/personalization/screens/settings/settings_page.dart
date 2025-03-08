@@ -18,8 +18,8 @@ class SettingsPage extends StatelessWidget {
     final backgroundColor = isDark ? TColors.dark : TColors.light;
 
     return Scaffold(
-      appBar: TAppBar(
-        title: const Text('Settings'),
+      appBar: const TAppBar(
+        title: Text('Settings'),
         showBackArrow: true,
         centerTitle: true,
       ),

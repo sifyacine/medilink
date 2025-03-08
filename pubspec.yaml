@@ -39,6 +39,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   capped_progress_indicator: ^0.0.2
   shared_preferences: ^2.5.2
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +58,8 @@ flutter:
     - assets/images/products/
     - assets/images/reviews/
     - assets/logos/
-
+    - assets/icons/services/
+    - assets/doctors/
   #-------------------------- local fonts --------------------------#
   fonts:
     - family: Poppins

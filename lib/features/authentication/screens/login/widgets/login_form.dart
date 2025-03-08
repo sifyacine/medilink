@@ -100,7 +100,7 @@ class TLoginForm extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: TColors.primary,
-                  padding: EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -119,12 +119,12 @@ class TLoginForm extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Don't have an account? "),
+                const Text("Don't have an account? "),
                 GestureDetector(
                   onTap: () {
                     Get.off(() => const SignUpScreen());
                   },
-                  child: Text(
+                  child: const Text(
                     'Sign up',
                     style: TextStyle(
                       color: TColors.primary,
@@ -137,11 +137,11 @@ class TLoginForm extends StatelessWidget {
             const SizedBox(height: TSizes.spaceBtwSections),
 
             /// Divider
-            Row(
+            const Row(
               children: [
                 Expanded(child: Divider()),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Text('OR'),
                 ),
                 Expanded(child: Divider()),
@@ -150,7 +150,7 @@ class TLoginForm extends StatelessWidget {
             const SizedBox(height: TSizes.spaceBtwSections),
 
             /// Social Login Buttons
-            Column(
+            const Column(
               children: [
                 SocialLoginButton(
                   text: 'Sign in with Google',
@@ -190,7 +190,7 @@ class SocialLoginButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: () {},
         style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -200,7 +200,7 @@ class SocialLoginButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(asset, height: 20),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(text),
           ],
         ),

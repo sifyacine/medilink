@@ -9,6 +9,8 @@ import '../../../../utils/helpers/helper_functions.dart';
 
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +27,13 @@ class WelcomeScreen extends StatelessWidget {
               Column(
                 children: [
                   Image.asset(TImages.appLogo, height: 80), // Replace with your actual image asset
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   RichText(
                     text: TextSpan(
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
                       children: [
                         TextSpan(text: 'Medi', style: TextStyle(color: isDark? TColors.white : TColors.black)),
-                        TextSpan(
+                        const TextSpan(
                           text: 'link',
                           style: TextStyle(color: TColors.primary),
                         ),
@@ -40,20 +42,20 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Subtitle
-              Text(
+              const Text(
                 "Let's get started!",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 "Log in to enjoy the features we offer and stay healthy!",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14, color: Colors.grey[700]),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Buttons
               SizedBox(
@@ -68,10 +70,10 @@ class WelcomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: Text("Log In", style: TextStyle(fontSize: 16, color: Colors.white)),
+                  child: const Text("Log In", style: TextStyle(fontSize: 16, color: Colors.white)),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
@@ -79,13 +81,13 @@ class WelcomeScreen extends StatelessWidget {
                     Get.to(() => const SignUpScreen());
                   },
                   style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    side: BorderSide(color: TColors.primary),
+                    side: const BorderSide(color: TColors.primary),
                   ),
-                  child: Text("Sign Up", style: TextStyle(fontSize: 16, color: TColors.primary)),
+                  child: const Text("Sign Up", style: TextStyle(fontSize: 16, color: TColors.primary)),
                 ),
               ),
             ],

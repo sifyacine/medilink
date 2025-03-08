@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:midilink/features/authentication/screens/onboarding/onboarding_screen.dart';
-import 'package:midilink/utils/constants/colors.dart';
 import 'package:midilink/utils/theme/theme.dart';
 
 import 'features/personalization/controllers/settings_controller.dart';

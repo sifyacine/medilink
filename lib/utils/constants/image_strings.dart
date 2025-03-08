@@ -136,9 +136,9 @@ class TImages {
   static const String userProfileImage3 = "assets/images/reviews/review_profile_image_3.jpeg";
 
   //Banners
-  static const String promoBanner1 = "assets/images/products/promo-banner-1.png";
-  static const String promoBanner2 = "assets/images/products/promo-banner-2.png";
-  static const String promoBanner3 = "assets/images/products/promo-banner-3.png";
+  static const String promoBanner1 = "assets/images/banners/banner_0.png";
+  static const String promoBanner2 = "assets/images/banners/banner_0.png";
+  static const String promoBanner3 = "assets/images/banners/banner_0.png";
   static const String banner1 = "assets/images/banners/banner_1.jpg";
   static const String banner2 = "assets/images/banners/banner_2.jpg";
   static const String banner3 = "assets/images/banners/banner_3.jpg";
@@ -164,5 +164,21 @@ class TImages {
   static const String successfulPaymentIcon = "assets/icons/payment_methods/successful_payment_icon.png";
 
   static String appLogo = "assets/logos/Medinova_logo.png";
+
+  static String ambulance = "assets/icons/services/Ambulance.svg";
+  static String doctor = "assets/icons/services/Doctor.svg";
+  static String hospital = "assets/icons/services/Hospital.svg";
+  static String nurse = "assets/icons/services/Pharmacy.svg";
+  static String pharmacy = "assets/icons/services/Pharmacy.svg";
+
+
+  static const String user1 = "assets/doctors/user1.webp";
+  static const String user2 = "assets/doctors/user2.jpg";
+  static const String user3 = "assets/doctors/user3.jpg";
+  static const String user4 = "assets/doctors/user4.jpg";
+  static const String user5 = "assets/doctors/user5.jpg";
+  static const String user6 = "assets/doctors/user6.jpg";
+  static const String user7 = "assets/doctors/user7.jpg";
+  static const String user8 = "assets/doctors/user8.jpg";
 }
 
