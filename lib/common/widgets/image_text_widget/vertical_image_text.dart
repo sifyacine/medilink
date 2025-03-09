@@ -58,15 +58,14 @@ class TVerticalTextImage extends StatelessWidget {
             ),
             const SizedBox(height: TSizes.spaceBtwItems / 2),
             SizedBox(
-              width: 55,
-              child: Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium!
-                    .apply(color: textColor),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              width: 60,
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(color: textColor, fontSize: 8),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:midilink/utils/helpers/helper_functions.dart';
 
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../utils/constants/colors.dart';
@@ -13,10 +14,13 @@ class THomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TAppBar(title: Text("all services for your health", style: Theme.of(context).textTheme.headlineSmall!.apply(color: TColors.white),),
-      actions: [
-        IconButton(onPressed: (){}, icon: const Icon(Iconsax.notification))
+    final isDark = THelperFunctions.isDarkMode(context);
+    return TAppBar(title: Column(
+      children: [
+        Text("All services for your health ", style: Theme.of(context).textTheme.headlineSmall!.apply(color: isDark? TColors.white : TColors.black),),
       ],
+    ),
+
     );
   }
 }

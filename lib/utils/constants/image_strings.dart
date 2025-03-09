@@ -180,5 +180,28 @@ class TImages {
   static const String user6 = "assets/doctors/user6.jpg";
   static const String user7 = "assets/doctors/user7.jpg";
   static const String user8 = "assets/doctors/user8.jpg";
+
+  static const generalPractitioner = "assets/icons/specialties/generalPractitioner.svg";
+  static const pulmonologist = "assets/icons/specialties/pulmonologist.svg";
+  static const dentist = "assets/icons/specialties/dentist.svg";
+  static const psychiatrist = "assets/icons/specialties/psychiatrist.svg";
+  static const neurologist = "assets/icons/specialties/neurologist.svg";
+  static const surgeon = "assets/icons/specialties/surgeon.svg";
+  static const cardiologist = "assets/icons/specialties/cardiologist.svg";
+  static const pediatrician = "assets/icons/specialties/pediatrician.svg";
+  static const dermatologist = "assets/icons/specialties/dermatologist.svg";
+  static const oncologist = "assets/icons/specialties/oncologist.svg";
+  static const optician = "assets/icons/specialties/optician.svg";
+  static const gynecologist = "assets/icons/specialties/gynecologist.svg";
+  static const endocrinologist = "assets/icons/specialties/endocrinologist.svg";
+  static const rheumatologist = "assets/icons/specialties/rheumatologist.svg";
+  static const orthopedist = "assets/icons/specialties/orthopedist.svg";
+  static const ophthalmologist = "assets/icons/specialties/ophthalmologist.svg";
+  static const urologist = "assets/icons/specialties/urologist.svg";
+  static const gastroenterologist = "assets/icons/specialties/gastroenterologist.svg";
+  static const nephrologist = "assets/icons/specialties/nephrologist.svg";
+
+
+
 }
 

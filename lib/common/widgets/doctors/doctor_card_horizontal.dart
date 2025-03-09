@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:midilink/common/widgets/images/rounded_images.dart';
 
+import '../../../../common/styles/shadows.dart';
+import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
-import '../../styles/shadows.dart';
-import '../custom_shapes/containers/rounded_container.dart';
-import '../images/rounded_images.dart';
 
 
 class TDoctorCardHorizontal extends StatefulWidget {
@@ -14,6 +14,7 @@ class TDoctorCardHorizontal extends StatefulWidget {
   final double rating;
   final String distance;
   final String imageUrl;
+  final VoidCallback? onTap;  // Changed from "CallBack" to "onTap" and made it optional
 
   const TDoctorCardHorizontal({
     Key? key,
@@ -22,6 +23,7 @@ class TDoctorCardHorizontal extends StatefulWidget {
     required this.rating,
     required this.distance,
     required this.imageUrl,
+    this.onTap,  // Optional callback
   }) : super(key: key);
 
   @override
@@ -33,7 +35,7 @@ class _TDoctorCardHorizontalState extends State<TDoctorCardHorizontal> {
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
     return GestureDetector(
-      onTap: () {
+      onTap: widget.onTap ?? () {
         print('Tapped on ${widget.name}');
       },
       child: Container(

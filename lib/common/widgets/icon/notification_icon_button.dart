@@ -43,7 +43,7 @@ class NotificationIconButton extends StatelessWidget {
                   '$notificationCount',
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 12,
+                    fontSize: 10,
                   ),
                   textAlign: TextAlign.center,
                 ),

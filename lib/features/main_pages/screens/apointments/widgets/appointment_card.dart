@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:midilink/utils/constants/colors.dart';
+import 'package:midilink/utils/constants/image_strings.dart';
 import 'package:midilink/utils/helpers/helper_functions.dart';
 
 import '../../../controllers/planning_controller.dart';
@@ -27,7 +28,7 @@ class AppointmentCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Card(
-        color: isDark? TColors.dark : TColors.light,
+        color: isDark? TColors.dark : TColors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -54,8 +55,8 @@ class AppointmentCard extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 24,
-          backgroundImage: NetworkImage(
-            appointment.doctorPfpUrl ?? 'https://via.placeholder.com/150',
+          backgroundImage: AssetImage(
+            appointment.doctorPfpUrl ?? TImages.user,
           ),
         ),
         const SizedBox(width: 12),
@@ -109,11 +110,11 @@ class AppointmentCard extends StatelessWidget {
   Widget _buildDateTimeRow() {
     return Row(
       children: [
-        const Icon(Iconsax.calendar_circle, size: 16),
+        const Icon(Icons.calendar_today_outlined, size: 16),
         const SizedBox(width: 4),
         Text(appointment.date),
         const SizedBox(width: 16),
-        const Icon(Iconsax.watch, size: 16),
+        const Icon(Icons.access_time, size: 16),
         const SizedBox(width: 4),
         Text(appointment.time),
       ],

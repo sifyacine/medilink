@@ -60,6 +60,7 @@ flutter:
     - assets/logos/
     - assets/icons/services/
     - assets/doctors/
+    - assets/icons/specialties/
   #-------------------------- local fonts --------------------------#
   fonts:
     - family: Poppins
