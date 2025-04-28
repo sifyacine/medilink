@@ -1,27 +1,48 @@
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
 import '../../../styles/shadows.dart';
 import '../../custom_shapes/containers/rounded_container.dart';
-import '../../icon/circular_icon.dart';
 import '../../images/rounded_images.dart';
 
+class TProductCardVertical extends StatelessWidget {
+  final String imageUrl;
+  final String? discount;
+  final String? title;
+  final String? manufacturer;
+  final double? price;
+  final bool isFavorite;
+  final VoidCallback? onTap;
+  final VoidCallback? onAdd;
+  final VoidCallback? onFavoriteTap;
 
-class TProductCardsVertical extends StatelessWidget {
-  const TProductCardsVertical({Key? key}) : super(key: key);
+  const TProductCardVertical({
+    super.key,
+    required this.imageUrl,
+    this.discount,
+    this.title,
+    this.manufacturer,
+    this.price,
+    this.isFavorite = false,
+    this.onTap,
+    this.onAdd,
+    this.onFavoriteTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = screenWidth * 0.45;
+    final imageHeight = cardWidth;
+
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
-        width: 180,
+        width: cardWidth,
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
           boxShadow: [TShadowStyle.verticalProductShadow],
@@ -29,87 +50,122 @@ class TProductCardsVertical extends StatelessWidget {
           color: isDark ? TColors.darkGrey : TColors.white,
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// Thumbnail, whitelists, discount tag
+            // Image Section
             TRoundedContainer(
-              height: 180,
+              height: imageHeight,
+              width: cardWidth,
               padding: const EdgeInsets.all(TSizes.sm),
               backgroundColor: isDark ? TColors.dark : TColors.light,
               child: Stack(
                 children: [
-                  /// thumbnail image
-                  const TRoundedImage(
-                    imageUrl: TImages.productImage19,
+                  TRoundedImage(
+                    imageUrl: imageUrl,
+                    fit: BoxFit.cover,
                     applyImageRadius: true,
                   ),
-
-                  /// -- sale tag
-                  Positioned(
-                    top: 12,
-                    child: TRoundedContainer(
-                      radius: TSizes.sm,
-                      backgroundColor: TColors.secondary.withOpacity(0.8),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: TSizes.xs, horizontal: TSizes.sm),
-                      child: Text(
-                        '25%',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .apply(color: TColors.black),
+                  if (discount != null)
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: cardWidth * 0.5),
+                        child: TRoundedContainer(
+                          radius: TSizes.sm,
+                          backgroundColor: Colors.red.withOpacity(0.8),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: TSizes.xs,
+                            horizontal: TSizes.sm,
+                          ),
+                          child: Text(
+                            discount!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .apply(color: TColors.white),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-
-                  /// fav icon
-                  const Positioned(
-                      top: 0,
-                      right: 0,
-                      child: TCircularIcon(
-                        icon: Iconsax.heart5,
-                        color: Colors.redAccent,
-                      ))
                 ],
               ),
             ),
-
-            /// details
-            const Padding(
-              padding: EdgeInsets.only(left: TSizes.sm),
-              child: Column(
-                children: [],
+            // Text Content Section
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: TSizes.sm),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (title != null)
+                      SizedBox(
+                        width: cardWidth - 2 * TSizes.sm,
+                        child: Text(
+                          title!,
+                          style: Theme.of(context).textTheme.titleSmall,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    if (manufacturer != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Flexible(
+                          child: Text(
+                            manufacturer!,
+                            style: Theme.of(context).textTheme.bodySmall!.apply(
+                              color: isDark ? TColors.dark : TColors.grey,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                /// price
 
-                Container(
-                  decoration: const BoxDecoration(
-                    color: TColors.dark,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(TSizes.cardRadiusMd),
-                      bottomRight:
-                      Radius.circular(TSizes.productImageRadius),
-                    ),
-                  ),
-                  child: const SizedBox(
-                    height: TSizes.iconLg * 1.2,
-                    width: TSizes.iconLg * 1.2,
-                    child: Center(
-                      child: Icon(
-                        Iconsax.add,
-                        color: TColors.light,
+            // Price & Add to Cart
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: TSizes.sm, vertical: 8),
+              child: Row(
+                children: [
+                  if (price != null)
+                    Expanded(
+                      child: SizedBox(
+                        child: Text(
+                          "DZD${price!.toStringAsFixed(2)}",
+                          style: Theme.of(context).textTheme.titleSmall,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                     ),
+                  Container(
+                    height: TSizes.iconLg,
+                    width: TSizes.iconLg,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(TSizes.cardRadiusMd),
+                        bottomRight: Radius.circular(TSizes.productImageRadius),
+                      ),
+                      color: TColors.primary,
+                    ),
+                    child: IconButton(
+                      onPressed: onAdd,
+                      icon: Icon(Iconsax.add, size: TSizes.iconSm, color: TColors.light),
+                      padding: EdgeInsets.zero,
+                    ),
                   ),
-                ),
-
-                ///
-              ],
-            )
+                ],
+              ),
+            ),
           ],
         ),
       ),

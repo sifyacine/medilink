@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -17,8 +16,16 @@ class TProductCardsHorizontal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+    // Card occupies 80% of the screen width.
+    final cardWidth = screenWidth * 0.8;
+    // Thumbnail takes about 35% of the card width.
+    final thumbnailSize = cardWidth * 0.35;
+    // The remaining width is for the details.
+    final detailsWidth = cardWidth - thumbnailSize;
+
     return Container(
-      width: 310,
+      width: cardWidth,
       padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         boxShadow: [TShadowStyle.verticalProductShadow],
@@ -27,25 +34,28 @@ class TProductCardsHorizontal extends StatelessWidget {
       ),
       child: Row(
         children: [
-          /// thumbnail
+          // Thumbnail section.
           TRoundedContainer(
-            height: 120,
+            height: thumbnailSize,
+            width: thumbnailSize,
             padding: const EdgeInsets.all(TSizes.sm),
             backgroundColor: isDark ? TColors.dark : TColors.light,
             child: Stack(
               children: [
-                /// thumbnail image
-                const SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: TRoundedImage(
-                      imageUrl: TImages.productImage16,
-                      applyImageRadius: true,
-                    )),
-
-                /// sale tag
+                // Thumbnail image.
+                SizedBox(
+                  width: thumbnailSize,
+                  height: thumbnailSize,
+                  child: TRoundedImage(
+                    imageUrl: TImages.productImage16,
+                    fit: BoxFit.cover, // Ensures the image covers the container.
+                    applyImageRadius: true,
+                  ),
+                ),
+                // Sale tag.
                 Positioned(
                   top: 12,
+                  left: 12,
                   child: TRoundedContainer(
                     radius: TSizes.sm,
                     backgroundColor: TColors.secondary.withOpacity(0.8),
@@ -60,44 +70,35 @@ class TProductCardsHorizontal extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                /// fav icon
+                // Favorite icon.
                 const Positioned(
-                    top: 0,
-                    right: 0,
-                    child: TCircularIcon(
-                      icon: Iconsax.heart5,
-                      color: Colors.redAccent,
-                    )),
+                  top: 0,
+                  right: 0,
+                  child: TCircularIcon(
+                    icon: Iconsax.heart5,
+                    color: Colors.redAccent,
+                  ),
+                ),
               ],
             ),
           ),
-
-          /// details
+          // Details section.
           SizedBox(
-            width: 172,
+            width: detailsWidth,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: TSizes.sm),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                    ],
-                  ),
-                ),
-
+                // Optional details can be added here.
+                const SizedBox(height: TSizes.sm),
+                // Spacer pushes the add-to-cart button to the bottom.
                 const Spacer(),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: TSizes.sm),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      /// pricing
-
-                      /// add to cart
+                      // You can add pricing or other details here.
+                      // Add-to-cart button.
                       Container(
                         decoration: const BoxDecoration(
                           color: TColors.dark,
@@ -106,15 +107,18 @@ class TProductCardsHorizontal extends StatelessWidget {
                             bottomRight: Radius.circular(TSizes.productImageRadius),
                           ),
                         ),
-                        child: const SizedBox(
+                        child: SizedBox(
                           width: TSizes.iconLg * 1.2,
                           height: TSizes.iconLg * 1.2,
-                          child: Center(child: Icon(Iconsax.add, color: TColors.white,),),
+                          child: const Center(
+                            child: Icon(Iconsax.add, color: TColors.white),
+                          ),
                         ),
                       )
                     ],
                   ),
-                )
+                ),
+                const SizedBox(height: TSizes.sm),
               ],
             ),
           )

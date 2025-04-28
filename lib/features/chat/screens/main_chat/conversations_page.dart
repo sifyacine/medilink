@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:midilink/features/chat/screens/main_chat/widgets/example_model_chat.dart';
-import 'package:midilink/features/chat/screens/main_chat/widgets/messages_list.dart';
+
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/custom_shapes/containers/animated_container_tabbar.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../controllers/chat_controller.dart';
-
-
-
+import '../chat_page/chat_page.dart';
+import 'widgets/example_model_chat.dart';
+import 'widgets/messages_list.dart';
 
 class MessagesPage extends StatelessWidget {
   MessagesPage({Key? key}) : super(key: key);
@@ -22,44 +21,46 @@ class MessagesPage extends StatelessWidget {
         title: const Text('Messages'),
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: Icon(Iconsax.search_normal)
+            onPressed: () {},
+            icon: const Icon(Iconsax.search_normal),
           )
         ],
       ),
       body: Column(
         children: [
           // Wrap your tab bar with Obx to update the UI on changes
-          Obx(() => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: SelectableOption(
-                    title: 'All',
-                    isSelected: controller.currentTabIndex.value == 0,
-                    onTap: () => controller.currentTabIndex.value = 0,
+          Obx(
+                () => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SelectableOption(
+                      title: 'All',
+                      isSelected: controller.currentTabIndex.value == 0,
+                      onTap: () => controller.currentTabIndex.value = 0,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: SelectableOption(
-                    title: 'Group',
-                    isSelected: controller.currentTabIndex.value == 1,
-                    onTap: () => controller.currentTabIndex.value = 1,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: SelectableOption(
+                      title: 'Group',
+                      isSelected: controller.currentTabIndex.value == 1,
+                      onTap: () => controller.currentTabIndex.value = 1,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: SelectableOption(
-                    title: 'Private',
-                    isSelected: controller.currentTabIndex.value == 2,
-                    onTap: () => controller.currentTabIndex.value = 2,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: SelectableOption(
+                      title: 'Private',
+                      isSelected: controller.currentTabIndex.value == 2,
+                      onTap: () => controller.currentTabIndex.value = 2,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )),
+          ),
           // The message list is already wrapped in Obx
           Expanded(
             child: Obx(() {
@@ -84,7 +85,9 @@ class MessagesPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: TColors.primary,
-        onPressed: controller.onNewChatButtonPressed,
+        // Navigate directly to the ChatScreen when tapped
+        onPressed: () {
+        },
         child: const Icon(Icons.chat, color: Colors.white),
       ),
     );

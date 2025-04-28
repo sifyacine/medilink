@@ -2,8 +2,8 @@ flutter_native_splash:
   color: "#FFFFFF" # Background color of the splash screen
   color_dark: "#272727" # Dark mode background color
   android_12:
-    image: assets/logos/medilink_logo_words.png
-    image_dark: assets/logos/medilink_logo_words_darkmode.png
+    image: assets/logos/midilink_logo.png
+    image_dark: assets/logos/midilink_logo.png
   android: true
   ios: true
   web: false

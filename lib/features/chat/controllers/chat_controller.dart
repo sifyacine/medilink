@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../screens/chat_page/chat_page.dart';
 import '../screens/main_chat/widgets/example_model_chat.dart';
 
 
@@ -44,7 +45,8 @@ class MessageController extends GetxController {
 
   /// A method to handle tapping on a message
   void onMessageTap(MessageItem item) {
-    // Navigate or show details...
+    Get.to(() => ChatScreen());
+
     print('Tapped on ${item.doctorName}');
   }
 

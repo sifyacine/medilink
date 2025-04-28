@@ -44,9 +44,9 @@ class TImages {
   static const String verifyIllustration = "assets/images/animations/sammy-line-travel-backpack-with-passport-and-air-ticket.gif";
 
   // -- OnBoarding Texts
-  static const String onBoardingImage1 = "assets/images/on_boarding_images/sammy-line-searching.gif";
-  static const String onBoardingImage2 = "assets/images/on_boarding_images/sammy-line-shopping.gif";
-  static const String onBoardingImage3 = "assets/images/on_boarding_images/sammy-line-delivery.gif";
+  static const String onBoardingImage1 = "assets/images/banners/doctor1.png";
+  static const String onBoardingImage2 = "assets/images/banners/doctor2.png";
+  static const String onBoardingImage3 = "assets/images/banners/doctor3.png";
 
   // -- Products
   static const String productImage1 = "assets/images/products/nike-shoes.png";
@@ -141,6 +141,7 @@ class TImages {
   static const String promoBanner3 = "assets/images/banners/banner_0.png";
   static const String banner1 = "assets/images/banners/banner_1.jpg";
   static const String banner2 = "assets/images/banners/banner_2.jpg";
+  static const String pharmacyBanner = "assets/images/banners/CTA.png";
   static const String banner3 = "assets/images/banners/banner_3.jpg";
   static const String banner4 = "assets/images/banners/banner_4.jpg";
   static const String banner5 = "assets/images/banners/banner_5.jpg";
@@ -182,7 +183,7 @@ class TImages {
   static const String user8 = "assets/doctors/user8.jpg";
 
   static const generalPractitioner = "assets/icons/specialties/generalPractitioner.svg";
-  static const pulmonologist = "assets/icons/specialties/pulmonologist.svg";
+  static const pulmonologist = "assets/icons/services/Lungs.png";
   static const dentist = "assets/icons/specialties/dentist.svg";
   static const psychiatrist = "assets/icons/specialties/psychiatrist.svg";
   static const neurologist = "assets/icons/specialties/neurologist.svg";
@@ -201,6 +202,20 @@ class TImages {
   static const gastroenterologist = "assets/icons/specialties/gastroenterologist.svg";
   static const nephrologist = "assets/icons/specialties/nephrologist.svg";
 
+
+  static const Amoxicillin_Clavulanate = "assets/images/medicines/Amoxicillin-Clavulanate.webp";
+  static const Aspirin = "assets/images/medicines/Aspirin.jpg";
+  static const Simvastatin = "assets/images/medicines/Simvastatin.jpg";
+  static const Diclofenac = "assets/images/medicines/Diclofenac.jpg";
+  static const Loratadine = "assets/images/medicines/Loratadine.jpg";
+  static const Metformin = "assets/images/medicines/Metformin.jpg";
+  static const Omeprazole = "assets/images/medicines/Omeprazole.webp";
+  static const Cetirizine = "assets/images/medicines/Cetirizine.jpg";
+  static const Azithromycin = "assets/images/medicines/Azithromycin.jpg";
+  static const Ibuprofen = "assets/images/medicines/Ibuprofen.jpg";
+  static const Paracetamol_Suspension = "assets/images/medicines/Paracetamol Suspension.jpg";
+  static const Amoxicillin = "assets/images/medicines/Amoxicillin.jpg";
+  static const medicine13 = "assets/images/medicines/Amoxicillin.jpg";
 
 
 }

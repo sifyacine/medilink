@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 
 import '../../../../../common/widgets/image_text_widget/vertical_image_text.dart';
 import '../../../../../utils/constants/image_strings.dart';
+import '../../clinic_list_page/clinic_list_page.dart';
 import '../../doctors/Docotors_screen.dart';
+import '../../emergencies/emergencies_map_page.dart';
+import '../../pharmacy/pharmacy_screen.dart';
 
 class THomeCategories extends StatelessWidget {
   const THomeCategories({super.key, required this.textColor});
@@ -24,21 +27,21 @@ class THomeCategories extends StatelessWidget {
         'image': TImages.pharmacy,
         'title': 'Pharmacies',
         'onTap': () {
-          debugPrint('Pharmacies tapped');
+          Get.to(() => const PharmacyScreen());
         },
       },
       {
         'image': TImages.hospital,
         'title': 'Clinics',
         'onTap': () {
-          debugPrint('Clinics tapped');
+          Get.to(() => ClinicListPage());
         },
       },
       {
         'image': TImages.ambulance,
         'title': 'Emergencies',
         'onTap': () {
-          debugPrint('Emergencies tapped');
+          Get.to(() => EmergenciesMapPage());
         },
       },
       {

@@ -27,18 +27,18 @@ class OnBoardingScreen extends StatelessWidget {
             onPageChanged: controller.updatePageIndicator,
             children: [
               OnBoardingPage(
-                title: S.of(context).onBoarding_first_page_title,
-                subtitle: S.of(context).onBoarding_second_page_subtitle,
+                title: "Select Your Healthcare Service",
+                subtitle: "Discover a range of medical solutions – clinics, pharmacies, and telehealth consultations all in one app!",
                 name: TImages.onBoardingImage1,
               ),
               OnBoardingPage(
-                title: S.of(context).onBoarding_second_page_title,
-                subtitle: S.of(context).onBoarding_second_page_subtitle,
+                title: "Book & Pay Securely",
+                subtitle: "Easily schedule appointments and manage payments with our secure, hassle-free system.",
                 name: TImages.onBoardingImage2,
               ),
               OnBoardingPage(
-                title: S.of(context).onBoarding_third_page_title,
-                subtitle: S.of(context).onBoarding_third_page_subtitle,
+                title: "Receive Care at Your Convenience",
+                subtitle: "Whether in-person or online, experience swift and professional care tailored to your needs.",
                 name: TImages.onBoardingImage3,
               ),
             ],

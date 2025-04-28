@@ -45,13 +45,6 @@
 		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
-		<key>CFBundleLocalizations</key>
-		<array>
-			<string>en</string>
-			<string>de_DE</string>
-			<string>fr_FR</string>
-			<string>ar_AR</string>
-		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>
 	</dict>

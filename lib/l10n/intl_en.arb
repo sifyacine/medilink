@@ -1,8 +1,8 @@
 {
-  "onBoarding_first_page_title": "choose your product",
-  "onBoarding_first_page_subtitle": "Welcome to a World of Limitless Choices - Your Perfect Product Awaits!",
-  "onBoarding_second_page_title": "Select Payment Method",
-  "onBoarding_second_page_subtitle": "For Seamless Transactions, Choose Your Payment Path - Your Convenience, Our Priority!",
-  "onBoarding_third_page_title": "Deliver at your door step",
-  "onBoarding_third_page_subtitle": "From Our Doorstep to Yours - Swift, Secure, and Contactless Delivery!"
+  "onBoarding_first_page_title": "Select Your Healthcare Service",
+  "onBoarding_first_page_subtitle": "Discover a range of medical solutions – clinics, pharmacies, and telehealth consultations all in one app!",
+  "onBoarding_second_page_title": "Book & Pay Securely",
+  "onBoarding_second_page_subtitle": "Easily schedule appointments and manage payments with our secure, hassle-free system.",
+  "onBoarding_third_page_title": "Receive Care at Your Convenience",
+  "onBoarding_third_page_subtitle": "Whether in-person or online, experience swift and professional care tailored to your needs."
 }

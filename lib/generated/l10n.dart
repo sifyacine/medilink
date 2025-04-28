@@ -18,17 +18,20 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
+    final name =
+        (locale.countryCode?.isEmpty ?? false)
+            ? locale.languageCode
+            : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -41,8 +44,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -50,60 +55,60 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `choose your product`
+  /// `Select Your Healthcare Service`
   String get onBoarding_first_page_title {
     return Intl.message(
-      'choose your product',
+      'Select Your Healthcare Service',
       name: 'onBoarding_first_page_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Welcome to a World of Limitless Choices - Your Perfect Product Awaits!`
+  /// `Discover a range of medical solutions – clinics, pharmacies, and telehealth consultations all in one app!`
   String get onBoarding_first_page_subtitle {
     return Intl.message(
-      'Welcome to a World of Limitless Choices - Your Perfect Product Awaits!',
+      'Discover a range of medical solutions – clinics, pharmacies, and telehealth consultations all in one app!',
       name: 'onBoarding_first_page_subtitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Select Payment Method`
+  /// `Book & Pay Securely`
   String get onBoarding_second_page_title {
     return Intl.message(
-      'Select Payment Method',
+      'Book & Pay Securely',
       name: 'onBoarding_second_page_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `For Seamless Transactions, Choose Your Payment Path - Your Convenience, Our Priority!`
+  /// `Easily schedule appointments and manage payments with our secure, hassle-free system.`
   String get onBoarding_second_page_subtitle {
     return Intl.message(
-      'For Seamless Transactions, Choose Your Payment Path - Your Convenience, Our Priority!',
+      'Easily schedule appointments and manage payments with our secure, hassle-free system.',
       name: 'onBoarding_second_page_subtitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Deliver at your door step`
+  /// `Receive Care at Your Convenience`
   String get onBoarding_third_page_title {
     return Intl.message(
-      'Deliver at your door step',
+      'Receive Care at Your Convenience',
       name: 'onBoarding_third_page_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `From Our Doorstep to Yours - Swift, Secure, and Contactless Delivery!`
+  /// `Whether in-person or online, experience swift and professional care tailored to your needs.`
   String get onBoarding_third_page_subtitle {
     return Intl.message(
-      'From Our Doorstep to Yours - Swift, Secure, and Contactless Delivery!',
+      'Whether in-person or online, experience swift and professional care tailored to your needs.',
       name: 'onBoarding_third_page_subtitle',
       desc: '',
       args: [],

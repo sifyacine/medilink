@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../appointment_details/Appointment_page.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> doctor;
@@ -137,7 +140,9 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => AppointmentPage());
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal,
                     shape: RoundedRectangleBorder(

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:midilink/utils/helpers/helper_functions.dart';
 
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/text_strings.dart';
 
 
 class THomeAppBar extends StatelessWidget {

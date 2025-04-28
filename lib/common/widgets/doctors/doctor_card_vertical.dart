@@ -3,7 +3,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:midilink/common/styles/shadows.dart';
 
 import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 import '../custom_shapes/containers/rounded_container.dart';
 import '../images/rounded_images.dart';

@@ -1,12 +1,26 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:midilink/app.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
-void main() async{  /// Add Widgets Binding
+import 'app.dart';
 
 
-  /// Init Local Storage
-  await GetStorage.init();
+void main() async {
 
-  runApp(const App());
+  /// Load environment variables
+  await dotenv.load(fileName: ".env");
+
+
+
+  /// Debug print
+
+  /// Retrieve the access token
+  String? accessToken = dotenv.env['MAP_API_KEY'];
+
+
+  MapboxOptions.setAccessToken(accessToken!);
+
+  runApp(App());
 }
