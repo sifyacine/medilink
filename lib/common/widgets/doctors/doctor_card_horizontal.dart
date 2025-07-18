@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:midilink/common/widgets/images/rounded_images.dart';
+import 'package:medilink/common/widgets/images/rounded_images.dart';
 
 import '../../../../common/styles/shadows.dart';
 import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';

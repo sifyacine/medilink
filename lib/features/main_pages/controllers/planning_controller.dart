@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/features/main_pages/screens/apointments/widgets/example_appointment_model.dart';
-import 'package:midilink/utils/constants/image_strings.dart';
+import 'package:medilink/features/main_pages/screens/apointments/widgets/example_appointment_model.dart';
+import 'package:medilink/utils/constants/image_strings.dart';
 
 class PlanningController extends GetxController {
   /// Current tab index (0 = Future, 1 = Finished, 2 = Canceled)

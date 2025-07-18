@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:midilink/features/authentication/screens/onboarding/onboarding_screen.dart';
-import 'package:midilink/utils/theme/theme.dart';
+import 'package:medilink/features/authentication/screens/onboarding/onboarding_screen.dart';
+import 'package:medilink/utils/constants/colors.dart';
+import 'package:medilink/utils/theme/theme.dart';
 
 import 'features/personalization/controllers/settings_controller.dart';
 import 'generated/l10n.dart';
@@ -32,7 +33,9 @@ class App extends StatelessWidget {
         Locale('fr', 'FR'),
         Locale('ar', 'AR'),
       ],
-      home: const OnBoardingScreen(),
+      home: const Scaffold(backgroundColor: TColors.primary,body: Center(
+        child: CircularProgressIndicator(color: Colors.white,),
+      ),),
     ));
   }
 }

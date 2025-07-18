@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:medilink/utils/constants/colors.dart';
+
+import '../../../utils/helpers/helper_functions.dart';
 
 class NotificationIconButton extends StatelessWidget {
   final int notificationCount;
@@ -17,11 +20,12 @@ class NotificationIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = THelperFunctions.isDarkMode(context);
     return Stack(
       clipBehavior: Clip.none, // Allow badge to overflow the stack boundary.
       children: [
         IconButton(
-          icon: Icon(icon, size: iconSize),
+          icon: Icon(icon, size: iconSize, color: isDark? TColors.white: TColors.black,),
           onPressed: onPressed,
         ),
         if (notificationCount > 0)

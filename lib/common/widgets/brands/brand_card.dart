@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:midilink/common/widgets/texts/brandicon_verify_button.dart';
+import 'package:medilink/common/widgets/texts/brandicon_verify_button.dart';
 
 import '../../../utils/constants/enums.dart';
 import '../../../utils/constants/image_strings.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:midilink/features/authentication/screens/password_configuration/reset_password.dart';
+import 'package:medilink/features/authentication/screens/password_configuration/reset_password.dart';
 
 import '../../../../common/widgets/custom_shapes/containers/animated_container_tabbar.dart';
 import '../../../../utils/constants/colors.dart';

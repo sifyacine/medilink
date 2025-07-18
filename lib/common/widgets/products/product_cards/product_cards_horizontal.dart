@@ -47,7 +47,7 @@ class TProductCardsHorizontal extends StatelessWidget {
                   width: thumbnailSize,
                   height: thumbnailSize,
                   child: TRoundedImage(
-                    imageUrl: TImages.productImage16,
+                    imageUrl: "assets/images/medicines/Adjustable Back Support Belt.jpg",
                     fit: BoxFit.cover, // Ensures the image covers the container.
                     applyImageRadius: true,
                   ),

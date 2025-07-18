@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:midilink/common/widgets/appbar/appbar.dart';
-import 'package:midilink/utils/constants/colors.dart';
+import 'package:medilink/common/widgets/appbar/appbar.dart';
+import 'package:medilink/utils/constants/colors.dart';
 
 import '../../controllers/map_controller.dart';
 

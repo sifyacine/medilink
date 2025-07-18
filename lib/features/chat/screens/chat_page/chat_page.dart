@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:midilink/features/chat/screens/chat_page/widgets/chat_message_widget.dart';
-import 'package:midilink/features/chat/screens/chat_page/widgets/message_input_widget.dart';
+import 'package:medilink/features/chat/screens/chat_page/widgets/chat_message_widget.dart';
+import 'package:medilink/features/chat/screens/chat_page/widgets/message_input_widget.dart';
 
 import '../../controllers/chat_page_controller.dart';
 

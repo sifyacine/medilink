@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/utils/constants/image_strings.dart';
+import 'package:medilink/utils/constants/image_strings.dart';
 
 import '../../../controllers/appointment_controller.dart';
 

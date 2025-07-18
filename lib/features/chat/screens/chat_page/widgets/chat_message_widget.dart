@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:midilink/utils/constants/colors.dart';
+import 'package:medilink/utils/constants/colors.dart';
 
 class ChatMessageWidget extends StatelessWidget {
   final String message;

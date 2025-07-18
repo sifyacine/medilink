@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../../../common/widgets/doctors/doctor_card_horizontal.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../models/doctor_model.dart';
+import '../../models/reviews_model.dart'; // Add model import
 
 class AllDoctorsScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> doctors;
+  final List<Doctor> doctors; // Changed to List<Doctor>
 
   const AllDoctorsScreen({Key? key, required this.doctors}) : super(key: key);
+
+  double _calculateAverageRating(List<Review> reviews) {
+    if (reviews.isEmpty) return 4.5;
+    final total = reviews.fold(0.0, (sum, review) => sum + review.rating);
+    return total / reviews.length;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +29,11 @@ class AllDoctorsScreen extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
             child: TDoctorCardHorizontal(
-              name: doctor['name']?.toString() ?? 'Unknown Doctor',
-              specialty: doctor['specialty']?.toString() ?? 'Unknown Specialty',
-              rating: (doctor['rating'] is num) ? (doctor['rating'] as num).toDouble() : 0.0,
-              distance: doctor['distance']?.toString() ?? 'N/A',
-              imageUrl: doctor['image']?.toString() ?? '',
+              name: doctor.fullName,
+              specialty: doctor.medicalSpecialty.join(', '),
+              rating: _calculateAverageRating(doctor.reviews),
+              distance: '1 km', // Add distance to Doctor model
+              imageUrl: doctor.doctorPic,
             ),
           );
         },

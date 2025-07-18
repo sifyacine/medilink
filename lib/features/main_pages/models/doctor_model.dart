@@ -1,10 +1,11 @@
 
 
-import 'package:midilink/features/main_pages/models/reviews_model.dart';
+import 'package:medilink/features/main_pages/models/reviews_model.dart';
 
-import 'clinic_model.dart';
 
 class Doctor {
+  final double consultationFee;
+  final double adminFee;
   final String fullName;
   final List<String> medicalSpecialty;
   final String doctorPic;
@@ -13,7 +14,6 @@ class Doctor {
   final String city;
   final String state;
   final String bio;
-  final List<Clinic> affiliatedClinics;
   final DateTime createdAt;
   final DateTime updatedAt;
   final List<Review> reviews; // New field for reviews
@@ -27,9 +27,10 @@ class Doctor {
     required this.city,
     required this.state,
     required this.bio,
-    required this.affiliatedClinics,
     required this.createdAt,
     required this.updatedAt,
+    required this.consultationFee,
+    required this.adminFee,
     this.reviews = const [],
   });
 }

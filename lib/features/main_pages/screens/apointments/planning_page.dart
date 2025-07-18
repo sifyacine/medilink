@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/common/widgets/appbar/appbar.dart';
-import 'package:midilink/features/main_pages/controllers/planning_controller.dart';
-import 'package:midilink/features/main_pages/screens/apointments/widgets/appointment_card.dart';
-import 'package:midilink/features/main_pages/screens/apointments/widgets/example_appointment_model.dart';
+import 'package:medilink/common/widgets/appbar/appbar.dart';
+import 'package:medilink/features/main_pages/controllers/planning_controller.dart';
+import 'package:medilink/features/main_pages/screens/apointments/widgets/appointment_card.dart';
+import 'package:medilink/features/main_pages/screens/apointments/widgets/example_appointment_model.dart';
 import '../../../../common/widgets/custom_shapes/containers/animated_container_tabbar.dart';
 import '../../../../common/widgets/icon/notification_icon_button.dart';
 

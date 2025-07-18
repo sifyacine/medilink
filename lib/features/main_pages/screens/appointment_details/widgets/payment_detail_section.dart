@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/features/main_pages/screens/appointment_details/widgets/payment_amount_row.dart';
-import 'package:midilink/utils/constants/colors.dart';
-import 'package:midilink/utils/helpers/helper_functions.dart';
+import 'package:medilink/features/main_pages/screens/appointment_details/widgets/payment_amount_row.dart';
+import 'package:medilink/utils/constants/colors.dart';
+import 'package:medilink/utils/helpers/helper_functions.dart';
 
 import '../../../controllers/appointment_controller.dart';
 

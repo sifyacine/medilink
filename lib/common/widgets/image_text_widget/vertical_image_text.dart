@@ -23,7 +23,6 @@ class TVerticalTextImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
-    final imageColor = isDark ? TColors.light : TColors.dark;
 
     return GestureDetector(
       onTap: onTap,
@@ -33,27 +32,21 @@ class TVerticalTextImage extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(TSizes.sm),
-              height: 56,
-              width: 56,
+              height: 64,
+              width: 64,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 color:
-                    backgroundColor ?? (isDark ? TColors.dark : TColors.white),
+                    backgroundColor ?? (isDark ? TColors.primary.withAlpha(46) : TColors.primary.withAlpha(36)),
               ),
               child: Center(
-                child: image.toLowerCase().endsWith('.svg')
-                    ? SvgPicture.asset(
-                        image,
-                        width: 40,
-                        height: 40,
-                        placeholderBuilder: (context) =>
-                            const CircularProgressIndicator(),
-                      )
-                    : Image.asset(
-                        image,
-                        fit: BoxFit.cover,
-                        color: imageColor,
-                      ),
+                child:
+                    image.toLowerCase().endsWith('.svg')
+                        ? SvgPicture.asset(image, width: 40, height: 40)
+                        : Image.asset(
+                          image,
+                          fit: BoxFit.cover,
+                        ),
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwItems / 2),

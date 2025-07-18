@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:midilink/features/authentication/screens/signup/signup.dart';
-import 'package:midilink/navigation_menu.dart';
-
+import 'package:medilink/features/authentication/screens/signup/signup.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../controllers/login/login_controller.dart';
@@ -75,19 +73,32 @@ class TLoginForm extends StatelessWidget {
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields / 2),
 
-            /// Forgot Password
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () => Get.to(() => const ForgetPassword()),
-                child: const Text(
-                  'Forgot password?',
-                  style: TextStyle(
-                    color: TColors.primary,
-                    fontSize: 12,
+            /// Remember Me & Forgot Password
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Obx(
+                      () => Row(
+                    children: [
+                      Checkbox(
+                        value: controller.rememberMe.value,
+                        onChanged: (value) => controller.rememberMe.value = value ?? false,
+                      ),
+                      const Text('Remember Me'),
+                    ],
                   ),
                 ),
-              ),
+                TextButton(
+                  onPressed: () => Get.to(() => const ForgetPassword()),
+                  child: const Text(
+                    'Forgot password?',
+                    style: TextStyle(
+                      color: TColors.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: TSizes.spaceBtwSections),
 
@@ -95,9 +106,7 @@ class TLoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const NavigationMenu());
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: TColors.primary,
                   padding: const EdgeInsets.symmetric(vertical: 15),

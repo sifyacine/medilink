@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/features/authentication/screens/login/login_screen.dart';
-import 'package:midilink/features/authentication/screens/signup/signup.dart';
-import 'package:midilink/utils/constants/image_strings.dart';
+import 'package:medilink/features/authentication/screens/login/login_screen.dart';
+import 'package:medilink/features/authentication/screens/signup/signup.dart';
+import 'package:medilink/utils/constants/image_strings.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/helpers/helper_functions.dart';

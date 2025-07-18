@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Profile Stat Widget
 class ProfileStat extends StatelessWidget {
-  final IconData icon;
+  final Widget icon; // Changed from IconData to Widget
   final String label;
   final String value;
 
@@ -18,11 +18,15 @@ class ProfileStat extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, color: Colors.white, size: 32), // Icon with size 24
+        SizedBox(
+          height: 32,
+          width: 32,
+          child: icon, // Now uses the passed widget
+        ),
         const SizedBox(height: 5),
         Text(
           label,
-          style: const TextStyle(fontSize: 14, color: Colors.white70), // Label text
+          style: const TextStyle(fontSize: 14, color: Colors.black),
         ),
         const SizedBox(height: 5),
         Text(

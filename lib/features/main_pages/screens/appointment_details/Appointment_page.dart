@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/features/main_pages/screens/appointment_details/widgets/doctor_info_card.dart';
-import 'package:midilink/features/main_pages/screens/appointment_details/widgets/editable_row_widget.dart';
-import 'package:midilink/features/main_pages/screens/appointment_details/widgets/payment_detail_section.dart';
-import 'package:midilink/features/main_pages/screens/appointment_details/widgets/payment_method_section.dart';
+import 'package:medilink/features/main_pages/screens/appointment_details/widgets/doctor_info_card.dart';
+import 'package:medilink/features/main_pages/screens/appointment_details/widgets/editable_row_widget.dart';
+import 'package:medilink/features/main_pages/screens/appointment_details/widgets/payment_detail_section.dart';
+import 'package:medilink/features/main_pages/screens/appointment_details/widgets/payment_method_section.dart';
 import '../../controllers/appointment_controller.dart';
 
 class AppointmentPage extends StatelessWidget {

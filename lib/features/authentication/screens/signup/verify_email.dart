@@ -1,6 +1,8 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medilink/data/repositories/authentication_repository.dart';
 
 import '../../../../common/widgets/success_screen/success_screen.dart';
 import '../../../../utils/constants/colors.dart';
@@ -8,17 +10,20 @@ import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../../controllers/signup/verify_email_controller.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({Key? key, required String email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VerifyEmailController());
 
     return Scaffold(
 
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        actions: [IconButton(onPressed: () => AuthenticationRepository.instance.logOut(), icon: Icon(CupertinoIcons.clear))],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -46,14 +51,7 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => SuccessScreen(
-                      image: TImages.staticSuccessIllustration,
-                      title: TTexts.yourAccountCreatedTitle,
-                      subtitle: "Welcome to Allonounou",
-                      onPressed: () {}),
-                    );
-                                    },
+                  onPressed: () => controller.checkEmailVerificationStatus(),
                   child: const Text(
                     TTexts.tContinue,
                   ),
@@ -63,7 +61,9 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => controller.sendEmailVerification());
+                  },
                   child: const Text(
                     "resend email",
                     style: TextStyle(color: TColors.primary),

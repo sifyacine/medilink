@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/utils/constants/colors.dart';
-import 'package:midilink/utils/helpers/helper_functions.dart';
+import 'package:medilink/utils/constants/colors.dart';
+import 'package:medilink/utils/helpers/helper_functions.dart';
 import '../../../../../common/widgets/image_text_widget/vertical_image_text.dart';
 import '../../../../../utils/constants/image_strings.dart';
 import '../../../controllers/doctors_specialties_controller.dart';
@@ -43,7 +43,7 @@ class TDoctorsSpecialties extends StatelessWidget {
       },
     },
     {
-      'image': TImages.neurologist,
+      'image': "assets/icons/specialties/nurse.png",
       'title': 'Neurologist',
       'onTap': () {
         debugPrint('Neurologist tapped');
@@ -64,84 +64,84 @@ class TDoctorsSpecialties extends StatelessWidget {
       },
     },
     {
-      'image': TImages.pediatrician,
+      'image': TImages.psychiatrist,
       'title': 'Pediatrician',
       'onTap': () {
         debugPrint('Pediatrician tapped');
       },
     },
     {
-      'image': TImages.dermatologist,
+      'image': TImages.psychiatrist,
       'title': 'Dermatologist',
       'onTap': () {
         debugPrint('Dermatologist tapped');
       },
     },
     {
-      'image': TImages.oncologist,
+      'image': TImages.psychiatrist,
       'title': 'Oncologist',
       'onTap': () {
         debugPrint('Oncologist tapped');
       },
     },
     {
-      'image': TImages.optician,
+      'image': TImages.psychiatrist,
       'title': 'Optician',
       'onTap': () {
         debugPrint('Optician tapped');
       },
     },
     {
-      'image': TImages.gynecologist,
+      'image': TImages.psychiatrist ,
       'title': 'Gynecologist',
       'onTap': () {
         debugPrint('Gynecologist tapped');
       },
     },
     {
-      'image': TImages.endocrinologist,
+      'image': TImages.psychiatrist,
       'title': 'Endocrinologist',
       'onTap': () {
         debugPrint('Endocrinologist tapped');
       },
     },
     {
-      'image': TImages.rheumatologist,
+      'image': TImages.psychiatrist,
       'title': 'Rheumatologist',
       'onTap': () {
         debugPrint('Rheumatologist tapped');
       },
     },
     {
-      'image': TImages.orthopedist,
+      'image': "assets/icons/specialties/",
       'title': 'Orthopedist',
       'onTap': () {
         debugPrint('Orthopedist tapped');
       },
     },
     {
-      'image': TImages.ophthalmologist,
+      'image': TImages.psychiatrist,
       'title': 'Ophthalmologist',
       'onTap': () {
         debugPrint('Ophthalmologist tapped');
       },
     },
     {
-      'image': TImages.urologist,
+      'image': TImages.psychiatrist,
       'title': 'Urologist',
       'onTap': () {
         debugPrint('Urologist tapped');
       },
     },
     {
-      'image': TImages.gastroenterologist,
+      'image': TImages.psychiatrist,
       'title': 'Gastroenterologist',
       'onTap': () {
         debugPrint('Gastroenterologist tapped');
       },
     },
     {
-      'image': TImages.nephrologist,
+      'image': TImages.psychiatrist,
       'title': 'Nephrologist',
       'onTap': () {
         debugPrint('Nephrologist tapped');

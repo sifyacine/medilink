@@ -1,21 +1,27 @@
 import 'package:get/get.dart';
 
+import '../../../data/dummy_data.dart';
 import '../models/medicine_model.dart';
 
 class CartController extends GetxController {
-  var cartItems = <Medicine>[].obs;
+  var cartItems = <Product>[
 
-  void addToCart(Medicine medicine) {
-    cartItems.add(medicine);
+  ].obs;
+  final RxList<Product> products = dummyProduct.obs;
+
+  void addToCart(Product product) {
+    cartItems.add(product);
   }
 
-  void removeFromCart(Medicine medicine) {
-    cartItems.remove(medicine);
+  void removeFromCart(Product product) {
+    cartItems.remove(product);
   }
 
   void clearCart() {
     cartItems.clear();
   }
 
-  double get totalPrice => cartItems.fold(0, (sum, item) => sum + item.medicinePrice);
+  double get totalPrice => cartItems.fold(0, (sum, item) => sum + item.price);
+  List<Product> get allProducts => products;
+
 }

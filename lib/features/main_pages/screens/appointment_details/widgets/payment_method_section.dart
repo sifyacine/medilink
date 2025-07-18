@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/utils/helpers/helper_functions.dart';
+import 'package:medilink/utils/helpers/helper_functions.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../controllers/appointment_controller.dart';
 

@@ -1,12 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/features/authentication/screens/onboarding/widgets/onboard_next_button.dart';
-import 'package:midilink/features/authentication/screens/onboarding/widgets/onboarding_navigator.dart';
-import 'package:midilink/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
-import 'package:midilink/features/authentication/screens/onboarding/widgets/onboarding_skip.dart';
+import 'package:medilink/features/authentication/screens/onboarding/widgets/onboard_next_button.dart';
+import 'package:medilink/features/authentication/screens/onboarding/widgets/onboarding_navigator.dart';
+import 'package:medilink/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
+import 'package:medilink/features/authentication/screens/onboarding/widgets/onboarding_skip.dart';
 
-import '../../../../generated/l10n.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../controllers/onboarding/onboarding_controller.dart';
 

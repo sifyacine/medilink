@@ -1,14 +1,17 @@
+
 import 'package:flutter/material.dart';
+import 'package:medilink/features/authentication/screens/signup/widgets/signup_form.dart';
+
+import '../../../../common/widgets/login_signup/form_divider.dart';
+import '../../../../common/widgets/login_signup/socail_buttons.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/text_strings.dart';
-import 'widgets/signup_form.dart';
-
 class SignUpScreen extends StatelessWidget {
-
-  const SignUpScreen({Key? key,}) : super(key: key);
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -16,16 +19,22 @@ class SignUpScreen extends StatelessWidget {
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
-              /// Title
+              /// title
               Text(
                 TTexts.signupTitle,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              /// Form
-              const SignUpForm(),  // Pass isParent flag here
+              /// form
+              const SignUpForm(),
               const SizedBox(height: TSizes.spaceBtwSections),
+              /// divider
+              TFormDivider(dividerText: TTexts.orSignUpWith.toUpperCase()),
+              const SizedBox(height: TSizes.spaceBtwSections),
+
+              /// social buttons
+              const TSocialButtons(),
             ],
           ),
         ),
@@ -33,3 +42,4 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
+

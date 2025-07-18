@@ -1,4 +1,4 @@
-# midilink
+# medilink
 
 A new Flutter project.
 

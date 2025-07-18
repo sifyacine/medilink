@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:midilink/utils/constants/colors.dart';
-import 'package:midilink/utils/helpers/helper_functions.dart';
+import 'package:medilink/utils/constants/colors.dart';
+import 'package:medilink/utils/helpers/helper_functions.dart';
 
 import 'features/chat/screens/main_chat/conversations_page.dart';
 import 'features/main_pages/screens/apointments/planning_page.dart';

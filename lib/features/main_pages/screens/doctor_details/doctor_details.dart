@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../appointment_details/Appointment_page.dart';
+import '../../models/doctor_model.dart';
+import '../../models/reviews_model.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
-  final Map<String, dynamic> doctor;
+  final Doctor doctor;
 
   const DoctorDetailsScreen({Key? key, required this.doctor}) : super(key: key);
 
@@ -29,14 +30,19 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     '08:00 PM'
   ];
 
+  double _calculateAverageRating(List<Review> reviews) {
+    if (reviews.isEmpty) return 4.5;
+    final total = reviews.fold(0.0, (sum, review) => sum + review.rating);
+    return (total / reviews.length).clamp(0.0, 5.0);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Safely get image path from doctor object. Use 'image' or fallback to 'imageUrl'
-    final String imagePath = widget.doctor['image'] ?? widget.doctor['imageUrl'] ?? '';
+    final rating = _calculateAverageRating(widget.doctor.reviews);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Doctor Details'),
+        title: const Text('Doctor Profile'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -44,100 +50,80 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Doctor Profile Header
               Center(
                 child: Column(
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: imagePath.isNotEmpty ? AssetImage(imagePath) : null,
-                      child: imagePath.isEmpty ? Icon(Icons.person, size: 50) : null,
+                      backgroundImage: AssetImage(widget.doctor.doctorPic),
+                      child: widget.doctor.doctorPic.isEmpty
+                          ? const Icon(Icons.person, size: 50)
+                          : null,
                     ),
-                    const SizedBox(height: 10),
-                    Text(widget.doctor['name'] ?? 'No name',
+                    const SizedBox(height: 15),
+                    Text(widget.doctor.fullName,
                         style: Theme.of(context).textTheme.headlineMedium),
-                    Text(widget.doctor['specialty'] ?? 'No specialty',
-                        style: TextStyle(color: Colors.grey)),
+                    Text(widget.doctor.medicalSpecialty.join(', '),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Colors.grey[600]
+                        )),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.star, color: Colors.amber, size: 20),
-                        Text(widget.doctor['rating']?.toString() ?? 'N/A'),
-                        const SizedBox(width: 10),
+                        Text(' ${rating.toStringAsFixed(1)}'),
+                        const SizedBox(width: 20),
                         Icon(Icons.location_on, color: Colors.grey, size: 20),
-                        Text(widget.doctor['distance'] ?? 'N/A'),
+                        Text(' 1 km'),
+                        const SizedBox(width: 20),
+                        Icon(Icons.medical_services, color: Colors.grey, size: 20),
+                        Text(' ${widget.doctor.age} yrs exp'),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              Text('About', style: Theme.of(context).textTheme.titleSmall),
-              Text(widget.doctor['bio'] ?? 'No bio available',
-                  style: TextStyle(color: Colors.grey)),
-              const SizedBox(height: 20),
-              Text('Select Date', style: Theme.of(context).textTheme.titleSmall),
-              SizedBox(
-                height: 50,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: dates.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedDateIndex = index;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        margin: EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          color: selectedDateIndex == index ? Colors.teal : Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(dates[index],
-                              style: TextStyle(
-                                  color: selectedDateIndex == index ? Colors.white : Colors.black)),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text('Select Time', style: Theme.of(context).textTheme.titleSmall),
-              SizedBox(
-                height: 160,
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, childAspectRatio: 2.5),
-                  itemCount: times.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedTimeIndex = index;
-                        });
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: selectedTimeIndex == index ? Colors.teal : Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(times[index],
-                              style: TextStyle(
-                                  color: selectedTimeIndex == index ? Colors.white : Colors.black)),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
+
+              const SizedBox(height: 25),
+
+              // Contact Information Section
+              _buildSectionTitle('Contact Information'),
+              _buildInfoRow(Icons.location_city, widget.doctor.address),
+              _buildInfoRow(Icons.location_on,
+                  '${widget.doctor.city}, ${widget.doctor.state}'),
+
+              const SizedBox(height: 25),
+
+              // About Section
+              _buildSectionTitle('About Doctor'),
+              Text(widget.doctor.bio,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.grey[700],
+                      height: 1.5
+                  )),
+
+              const SizedBox(height: 25),
+
+              // Reviews Section
+              _buildSectionTitle('Patient Reviews'),
+              ...widget.doctor.reviews.take(3).map((review) => _buildReviewTile(review)),
+
+              const SizedBox(height: 25),
+
+              // Appointment Scheduling
+              _buildSectionTitle('Select Date'),
+              _buildDateSelector(),
+
+              const SizedBox(height: 25),
+
+              _buildSectionTitle('Select Time'),
+              _buildTimeGrid(),
+
+              const SizedBox(height: 25),
+
+              // Book Appointment Button
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -147,16 +133,127 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                     backgroundColor: Colors.teal,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    padding:
-                    EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   ),
-                  child: Text('Book Appointment',
+                  child: const Text('Book Appointment',
                       style: TextStyle(fontSize: 16, color: Colors.white)),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Text(title,
+          style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.teal
+          )),
+    );
+  }
+
+  Widget _buildInfoRow(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        children: [
+          Icon(icon, size: 20, color: Colors.grey),
+          const SizedBox(width: 12),
+          Text(text, style: TextStyle(color: Colors.grey[700])),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReviewTile(Review review) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(review.id,
+                    style: const TextStyle(fontWeight: FontWeight.w500)),
+                const Spacer(),
+                ...List.generate(5, (index) => Icon(
+                  index < review.rating.floor() ? Icons.star : Icons.star_border,
+                  size: 16,
+                  color: Colors.amber,
+                )),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(review.comment,
+                style: TextStyle(color: Colors.grey[600])),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDateSelector() {
+    return SizedBox(
+      height: 50,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: dates.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () => setState(() => selectedDateIndex = index),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              margin: const EdgeInsets.only(right: 10),
+              decoration: BoxDecoration(
+                color: selectedDateIndex == index ? Colors.teal : Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(dates[index],
+                    style: TextStyle(
+                        color: selectedDateIndex == index ? Colors.white : Colors.black)),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildTimeGrid() {
+    return SizedBox(
+      height: 160,
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, childAspectRatio: 2.5),
+        itemCount: times.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () => setState(() => selectedTimeIndex = index),
+            child: Container(
+              margin: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: selectedTimeIndex == index ? Colors.teal : Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(times[index],
+                    style: TextStyle(
+                        color: selectedTimeIndex == index ? Colors.white : Colors.black)),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

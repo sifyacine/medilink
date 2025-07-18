@@ -36,7 +36,6 @@ class TCartItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TBrandTitleWithVerifiedIcon(title: pharmacyName),
               Flexible(
                 child: TProductTitleText(title: productTitle),
               ),
@@ -44,7 +43,7 @@ class TCartItem extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Dosage ',
+                      text: 'Details ',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextSpan(

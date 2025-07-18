@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:midilink/features/main_pages/screens/cart/widget/cart_item.dart';
+import 'package:medilink/features/main_pages/screens/cart/widget/cart_item.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../utils/constants/colors.dart';

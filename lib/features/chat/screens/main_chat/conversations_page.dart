@@ -6,7 +6,6 @@ import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/custom_shapes/containers/animated_container_tabbar.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../controllers/chat_controller.dart';
-import '../chat_page/chat_page.dart';
 import 'widgets/example_model_chat.dart';
 import 'widgets/messages_list.dart';
 

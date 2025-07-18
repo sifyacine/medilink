@@ -1,46 +1,76 @@
-class Medicine {
-  final String medicineName;
-  final String medicinePic;
-  final double medicinePrice;
-  final List<String> activeComponents;
-  final String dosage;
+import 'package:medilink/features/main_pages/models/pharmacy.dart';
+import 'package:medilink/features/main_pages/models/reviews_model.dart';
+
+
+class Product {
+  final String id;
+  final String name;
+  final String imageUrl;
+  final double price;
   final String description;
   final int stock;
-  final bool requiresPrescription;
-  final String ageGroup;
-  final DateTime expirationDate;
-  final String manufacturer;
+  final Pharmacy manufacturer;
   final String category;
+  final String size;
+  final String material;
+  final int reductionPercentage;
+  final bool isAvailable;
+  final DateTime addedDate;
+  final List<Review> ratings;
 
-  Medicine({
-    required this.medicineName,
-    required this.medicinePic,
-    required this.medicinePrice,
-    required this.activeComponents,
-    required this.dosage,
+  Product({
+    required this.id,
+    required this.name,
+    required this.imageUrl,
+    required this.price,
     required this.description,
     required this.stock,
-    required this.requiresPrescription,
-    required this.ageGroup,
-    required this.expirationDate,
     required this.manufacturer,
     required this.category,
+    required this.size,
+    required this.material,
+    required this.reductionPercentage,
+    required this.isAvailable,
+    required this.addedDate,
+    this.ratings = const [],
   });
 
-  factory Medicine.fromJson(Map<String, dynamic> json) {
-    return Medicine(
-      medicineName: json['medicine_name'],
-      medicinePic: json['medicine_pic'],
-      medicinePrice: json['medicine_price'],
-      activeComponents: List<String>.from(json['active_components']),
-      dosage: json['dosage'],
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      name: json['name'],
+      imageUrl: json['image_url'],
+      price: (json['price'] as num).toDouble(),
       description: json['description'],
       stock: json['stock'],
-      requiresPrescription: json['requires_prescription'],
-      ageGroup: json['age_group'],
-      expirationDate: DateTime.parse(json['expiration_date']),
-      manufacturer: json['manufacturer'],
+      manufacturer: Pharmacy.fromJson(json['manufacturer']),
       category: json['category'],
+      size: json['size'],
+      material: json['material'],
+      reductionPercentage: json['reduction_percentage'] ?? 0,
+      isAvailable: json['is_available'] ?? true,
+      addedDate: DateTime.parse(json['added_date']),
+      ratings: (json['ratings'] as List<dynamic>?)
+          ?.map((e) => Review.fromJson(e))
+          .toList() ??
+          [],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'image_url': imageUrl,
+    'price': price,
+    'description': description,
+    'stock': stock,
+    'manufacturer': manufacturer.toJson(),
+    'category': category,
+    'size': size,
+    'material': material,
+    'reduction_percentage': reductionPercentage,
+    'is_available': isAvailable,
+    'added_date': addedDate.toIso8601String(),
+    'ratings': ratings.map((e) => e.toJson()).toList(),
+  };
 }

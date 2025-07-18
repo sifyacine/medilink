@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:midilink/features/authentication/screens/login/widgets/login_form.dart';
+import 'package:medilink/features/authentication/screens/login/widgets/login_form.dart';
 
 import '../../../../common/styles/spacing_styles.dart';
 

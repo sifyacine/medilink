@@ -1,4 +1,4 @@
-name: midilink
+name: medilink
 description: "A new Flutter project."
 
 publish_to: 'none'
@@ -41,12 +41,17 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   capped_progress_indicator: ^0.0.2
   shared_preferences: ^2.5.2
-  flutter_svg: ^2.0.17
+  flutter_svg: ^2.1.0
   mapbox_maps_flutter: ^2.6.2
   permission_handler: ^11.4.0
   flutter_dotenv: ^5.2.1
   intl_utils: ^2.8.10
   geolocator: ^13.0.3
+  firebase_core: ^3.15.1
+  firebase_auth: ^5.6.2
+  cloud_firestore: ^5.6.11
+  connectivity_plus: ^6.1.4
+  google_sign_in: ^7.1.0
 
 dev_dependencies:
   flutter_test:
@@ -64,9 +69,11 @@ flutter:
     - assets/images/on_boarding_images/
     - assets/images/reviews/
     - assets/logos/
+
     - assets/icons/services/
     - assets/doctors/
     - assets/icons/specialties/
+    - assets/icons/categories/
     - assets/data/
     - assets/images/medicines/
     - assets/clinics/

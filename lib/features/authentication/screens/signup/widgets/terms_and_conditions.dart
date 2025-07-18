@@ -1,60 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../../utils/constants/colors.dart';
-import '../../../controllers/signup/signup_controller.dart';
+import '../../../../../utils/constants/sizes.dart';
+import '../../../../../utils/constants/text_strings.dart';
+import '../../../../../utils/helpers/helper_functions.dart';
 
 class TermsAndConditions extends StatelessWidget {
   const TermsAndConditions({
-    super.key,
+  super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final controller = SignupController.instance;
-    return           Row(
+    final isDark = THelperFunctions.isDarkMode(context);
+    return Row(
       children: [
-        Obx(
-              () => Checkbox(
-            value: controller.privacyPolicy.value,
-            onChanged: (value) => controller.privacyPolicy.value = value ?? false,
-            activeColor: TColors.primary,
-          ),
+        SizedBox(
+          height: 24,
+          width: 24,
+          child: Checkbox(value: true, onChanged: (value) {}),
         ),
+        const SizedBox(width: TSizes.spaceBtwItems,),
         Expanded(
-          child: Wrap(
-            children: [
-              const Text(
-                "I accept the ",
-                style: TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Handle Terms of Use Click
-                },
-                child: const Text(
-                  "Terms of Use",
-                  style: TextStyle(fontSize: 12, color: TColors.primary, fontWeight: FontWeight.bold),
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: '${TTexts.iAgreeTo} ',
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
-              ),
-              const Text(
-                " and ",
-                style: TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Handle Privacy Policy Click
-                },
-                child: const Text(
-                  "Privacy Policy",
-                  style: TextStyle(fontSize: 12, color: TColors.primary, fontWeight: FontWeight.bold),
+                TextSpan(
+                  text: '${TTexts.privacyPolicy} ',
+                  style: Theme.of(context).textTheme.bodyMedium!.apply(
+                    color: isDark ? TColors.white : TColors.primary,
+                    decoration: TextDecoration.underline,
+                    decorationColor: isDark ? TColors.white : TColors.primary,
+                  ),
                 ),
-              ),
-              const Text(
-                " of Medilink",
-                style: TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-            ],
+                TextSpan(
+                  text: '${TTexts.and} ',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                TextSpan(
+                  text: '${TTexts.termsOfUse} ',
+                  style: Theme.of(context).textTheme.bodyMedium!.apply(
+                    color: isDark ? TColors.white : TColors.primary,
+                    decoration: TextDecoration.underline,
+                    decorationColor: isDark ? TColors.white : TColors.primary,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

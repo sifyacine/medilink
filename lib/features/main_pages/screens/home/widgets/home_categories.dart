@@ -6,6 +6,7 @@ import '../../../../../utils/constants/image_strings.dart';
 import '../../clinic_list_page/clinic_list_page.dart';
 import '../../doctors/Docotors_screen.dart';
 import '../../emergencies/emergencies_map_page.dart';
+import '../../nurse_page/nurse_page.dart';
 import '../../pharmacy/pharmacy_screen.dart';
 
 class THomeCategories extends StatelessWidget {
@@ -17,38 +18,38 @@ class THomeCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     final specialties = <Map<String, dynamic>>[
       {
-        'image': TImages.doctor,
+        'image': "assets/icons/services/Doctor.svg",
         'title': 'Doctors',
         'onTap': () {
           Get.to(() => const DoctorsScreen());
         },
       },
       {
-        'image': TImages.pharmacy,
+        'image': "assets/icons/services/Pharmacy.svg",
         'title': 'Pharmacies',
         'onTap': () {
           Get.to(() => const PharmacyScreen());
         },
       },
       {
-        'image': TImages.hospital,
+        'image': "assets/icons/services/Hospital.svg",
         'title': 'Clinics',
         'onTap': () {
           Get.to(() => ClinicListPage());
         },
       },
       {
-        'image': TImages.ambulance,
+        'image': "assets/icons/services/Ambulance.svg",
         'title': 'Emergencies',
         'onTap': () {
           Get.to(() => EmergenciesMapPage());
         },
       },
       {
-        'image': TImages.nurse,
+        'image': "assets/icons/services/nurse.png",
         'title': 'Nurse',
         'onTap': () {
-          debugPrint('Nurse tapped');
+          Get.to(() => NursePage());
         },
       },
     ];

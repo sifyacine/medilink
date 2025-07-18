@@ -1,4 +1,3 @@
-import 'clinic_model.dart';
 import 'reviews_model.dart';
 
 class Nurse {
@@ -10,7 +9,6 @@ class Nurse {
   final String city;
   final String state;
   final String bio;
-  final List<Clinic> affiliatedClinics; // Clinics the nurse is associated with
   final int yearsOfExperience;
   final List<String> certifications; // e.g. BLS, ACLS, etc.
   final List<String> languagesSpoken;
@@ -27,7 +25,6 @@ class Nurse {
     required this.city,
     required this.state,
     required this.bio,
-    required this.affiliatedClinics,
     required this.yearsOfExperience,
     required this.certifications,
     required this.languagesSpoken,
