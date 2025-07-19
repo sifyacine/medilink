@@ -16,7 +16,7 @@ class TPrimaryHeaderContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return TCurvedEdgeWidget(
       child: Container(
-        height: 400, // Increase height for proper spacing
+        height: 220, // Increase height for proper spacing
 
         color: TColors.primary,
         padding: const EdgeInsets.all(0),

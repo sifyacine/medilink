@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:medilink/features/personalization/screens/settings/settings.dart';
 import 'package:medilink/utils/constants/colors.dart';
 import 'package:medilink/utils/helpers/helper_functions.dart';
 
 import 'features/chat/screens/main_chat/conversations_page.dart';
 import 'features/main_pages/screens/apointments/planning_page.dart';
 import 'features/main_pages/screens/home/home.dart';
-import 'features/personalization/screens/profile/profile_screen.dart';
+import 'features/personalization/screens/profile/profile.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -67,6 +68,6 @@ class NavigationController extends GetxController {
     HomeScreen(),
     MessagesPage(),
     const PlanningScreen(),
-    const ProfileScreen(),
+    const SettingsPage(),
   ];
 }

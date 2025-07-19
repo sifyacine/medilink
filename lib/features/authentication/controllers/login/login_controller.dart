@@ -15,8 +15,12 @@ class LoginController extends GetxController {
   final localStorage = GetStorage();
   final email = TextEditingController();
   final password = TextEditingController();
+
+
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
   final userController = Get.put(UserController());
+  final NetworkManager networkManager = Get.put(NetworkManager());
 
   @override
   void onInit() {
@@ -51,11 +55,9 @@ class LoginController extends GetxController {
       }
 
       // Log in user using email and password authentication
-      final userCredentials = await AuthenticationRepository.instance
+      await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
-      // Save user records (if necessary)
-      await userController.saveUserRecord(userCredentials);
 
       // Remove loader
       TFullScreenLoader.stopLoading();
@@ -95,4 +97,6 @@ class LoginController extends GetxController {
       TLoaders.errorSnackBar(title: "Oh snap", message: e.toString());
     }
   }
+
+
 }

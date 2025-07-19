@@ -116,7 +116,7 @@ class UserModel {
   }
 
   // Get full name
-  String get fullName => '$firstName $lastName';
+  String get fullName => '${firstName.trim()} ${lastName.trim()}';
 
   // Format phone number
   String get formattedPhoneNo => TFormatter.formatPhoneNumber(phoneNumber);

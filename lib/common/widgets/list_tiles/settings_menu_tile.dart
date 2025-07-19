@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/constants/colors.dart';
 
-
 class TSettingsMenuTile extends StatelessWidget {
   final IconData icon;
-  final String title;
-  final String? subtitle;
+  final String title, subtitle;
   final Widget? trailing;
   final VoidCallback? onTab;
 
   const TSettingsMenuTile(
-      {super.key,
-        required this.icon,
-        required this.title,
-        this.trailing, this.onTab, this.subtitle});
+      {Key? key,
+      required this.icon,
+      required this.title,
+      required this.subtitle,
+      this.trailing, this.onTab})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,10 @@ class TSettingsMenuTile extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.headlineSmall,
       ),
-      subtitle: subtitle != null ? Text(subtitle!) : null,
+      subtitle: Text(
+        subtitle,
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
       trailing: trailing,
       onTap: onTab,
     );

@@ -1,128 +1,127 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:medilink/features/authentication/screens/signup/widgets/terms_and_conditions.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
+import '../../../../../utils/validators/validation.dart';
 import '../../../controllers/signup/signup_controller.dart';
 
 class SignUpForm extends StatelessWidget {
-  const SignUpForm({super.key});
+  const SignUpForm({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignupController());
-
     return Form(
       key: controller.signupFormKey,
       child: Column(
         children: [
-          /// First and Last Name
+          /// first and last name
           Row(
             children: [
               Expanded(
                 child: TextFormField(
+                  validator: (value) =>
+                      TValidator.validateFullName(value),
                   controller: controller.firstName,
                   expands: false,
                   decoration: const InputDecoration(
                     labelText: TTexts.firstName,
                     prefixIcon: Icon(Iconsax.user),
                   ),
-                  validator: controller.validateFirstName,
                 ),
               ),
               const SizedBox(width: TSizes.spaceBtwInputFields),
               Expanded(
                 child: TextFormField(
+                  validator: (value) =>
+                      TValidator.validateFullName(value),
                   controller: controller.lastName,
                   expands: false,
                   decoration: const InputDecoration(
                     labelText: TTexts.lastName,
                     prefixIcon: Icon(Iconsax.user),
                   ),
-                  validator: controller.validateLastName,
                 ),
               ),
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
-          /// Username
+          /// user name
           TextFormField(
+            validator: (value) =>
+                TValidator.validateUsername(value),
             controller: controller.userName,
             expands: false,
             decoration: const InputDecoration(
               labelText: TTexts.username,
               prefixIcon: Icon(Iconsax.user_edit),
             ),
-            validator: controller.validateUserName,
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
-          /// Email
+          /// email
           TextFormField(
+            validator: (value) => TValidator.validateEmail(value),
             controller: controller.email,
             expands: false,
             decoration: const InputDecoration(
               labelText: TTexts.email,
               prefixIcon: Icon(Iconsax.direct),
             ),
-            validator: controller.validateEmail,
           ),
+
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
-          /// Phone Number
+          /// phone number
           TextFormField(
+            validator: (value) => TValidator.validatePhoneNumber(value),
             controller: controller.phoneNumber,
             decoration: const InputDecoration(
               labelText: TTexts.phoneNo,
               prefixIcon: Icon(Iconsax.call),
             ),
-            validator: controller.validatePhoneNumber,
           ),
+
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
-          /// Password
+          /// password
           Obx(
                 () => TextFormField(
+              validator: (value) => TValidator.validatePassword(value),
               controller: controller.password,
               obscureText: controller.hidePassword.value,
               decoration: InputDecoration(
                 labelText: TTexts.password,
                 prefixIcon: const Icon(Iconsax.password_check),
                 suffixIcon: IconButton(
-                  icon: Icon(
-                    controller.hidePassword.value
-                        ? Iconsax.eye_slash
-                        : Iconsax.eye,
-                  ),
-                  onPressed: () => controller.hidePassword.toggle(),
+                  icon:  Icon(controller.hidePassword.value? Iconsax.eye_slash: Iconsax.eye,),
+                  onPressed: () => controller.hidePassword.value =
+                  !controller.hidePassword.value,
                 ),
               ),
-              validator: controller.validatePassword,
             ),
           ),
+
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
-          /// Terms and Conditions Checkbox
-          Obx(
-                () => Row(
-              children: [
-                Checkbox(
-                  value: controller.privacyPolicy.value,
-                  onChanged: (value) => controller.privacyPolicy.value = value!,
-                ),
-                const Text('I agree to the Terms and Conditions'),
-              ],
-            ),
-          ),
+          /// terms and conditions checkbox
+          const TermsAndConditions(),
 
-          /// Signup Button
+          /// signup button
           const SizedBox(height: TSizes.spaceBtwSections),
+          // Add space here
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () => controller.signup(),
-              child: const Text(TTexts.signupTitle),
+              child: const Text(
+                TTexts.signupTitle,
+              ),
             ),
           ),
         ],

@@ -1,216 +1,131 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:medilink/features/authentication/screens/signup/signup.dart';
+
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
+import '../../../../../utils/constants/text_strings.dart';
+import '../../../../../utils/validators/validation.dart';
 import '../../../controllers/login/login_controller.dart';
 import '../../password_configuration/forget_password.dart';
+import '../../signup/signup.dart';
+
 
 class TLoginForm extends StatelessWidget {
-  const TLoginForm({Key? key}) : super(key: key);
+  const TLoginForm({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
-
     return Form(
       key: controller.loginFormKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: TSizes.spaceBtwSections),
         child: Column(
           children: [
-            /// Email Field
             TextFormField(
               controller: controller.email,
-              keyboardType: TextInputType.emailAddress,
+              validator: (value) => TValidator.validateEmail(value),
               decoration: const InputDecoration(
                 prefixIcon: Icon(Iconsax.direct_right),
-                labelText: 'Enter your email',
-                hintText: 'Enter your email',
+                labelText: TTexts.email,
               ),
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Email is required';
-                }
-                if (!GetUtils.isEmail(value.trim())) {
-                  return 'Please enter a valid email';
-                }
-                return null;
-              },
             ),
-            const SizedBox(height: TSizes.spaceBtwInputFields),
-
-            /// Password Field
+            const SizedBox(
+              height: TSizes.spaceBtwInputFields,
+            ),
             Obx(
                   () => TextFormField(
+                validator: (value) =>
+                    TValidator.validatePassword(value),
                 controller: controller.password,
                 obscureText: controller.hidePassword.value,
                 decoration: InputDecoration(
-                  prefixIcon: const Icon(Iconsax.lock),
-                  labelText: 'Enter your password',
-                  hintText: 'Enter your password',
+                  prefixIcon: const Icon(Iconsax.eye_slash),
                   suffixIcon: IconButton(
-                    onPressed: () => controller.hidePassword.value =
-                    !controller.hidePassword.value,
                     icon: Icon(
                       controller.hidePassword.value
                           ? Iconsax.eye_slash
                           : Iconsax.eye,
                     ),
+                    onPressed: () => controller.hidePassword.value =
+                    !controller.hidePassword.value,
                   ),
+                  labelText: TTexts.password,
                 ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Password is required';
-                  }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwInputFields / 2),
+            const SizedBox(
+              height: TSizes.spaceBtwInputFields / 2,
+            ),
 
-            /// Remember Me & Forgot Password
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Obx(
-                      () => Row(
+            /// remember me and forget password
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  /// remember me
+                  Row(
                     children: [
-                      Checkbox(
-                        value: controller.rememberMe.value,
-                        onChanged: (value) => controller.rememberMe.value = value ?? false,
+                      Obx(
+                            () => Checkbox(
+                          value: controller.rememberMe.value,
+                          onChanged: (value) => controller.rememberMe.value =
+                          !controller.rememberMe.value,
+                        ),
                       ),
-                      const Text('Remember Me'),
+                      const Text(TTexts.rememberMe),
                     ],
                   ),
-                ),
-                TextButton(
-                  onPressed: () => Get.to(() => const ForgetPassword()),
-                  child: const Text(
-                    'Forgot password?',
-                    style: TextStyle(
-                      color: TColors.primary,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: TSizes.spaceBtwSections),
 
-            /// Sign In Button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: TColors.primary,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: Text(
-                  'Login',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
+                  /// forget password
+                  TextButton(
+                    onPressed: () {
+                      Get.to(() => const ForgetPassword());
+                    },
+                    child: const Text(TTexts.forgetPassword,
+                        style: TextStyle(color: TColors.primary)),
+                  )
+                ],
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwItems),
+            const SizedBox(
+              width: TSizes.spaceBtwSections,
+            ),
 
-            /// Create Account Text
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
               children: [
-                const Text("Don't have an account? "),
-                GestureDetector(
-                  onTap: () {
-                    Get.off(() => const SignUpScreen());
-                  },
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(
-                      color: TColors.primary,
-                      fontWeight: FontWeight.bold,
+                /// Sign in button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => controller.emailAndPasswordSignIn(),
+                    child: const Text(
+                      TTexts.signIn,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+
+                /// create account button
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0), // Add space here
+                    child: OutlinedButton(
+                      onPressed: () => Get.to(() => const SignUpScreen()),
+                      child: const Text(
+                        TTexts.createAccount,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: TSizes.spaceBtwSections),
-
-            /// Divider
-            const Row(
-              children: [
-                Expanded(child: Divider()),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text('OR'),
-                ),
-                Expanded(child: Divider()),
-              ],
-            ),
-            const SizedBox(height: TSizes.spaceBtwSections),
-
-            /// Social Login Buttons
-            const Column(
-              children: [
-                SocialLoginButton(
-                  text: 'Sign in with Google',
-                  asset: 'assets/logos/google-icon.png',
-                ),
-                SocialLoginButton(
-                  text: 'Sign in with Apple',
-                  asset: 'assets/logos/apple-logo.png',
-                ),
-                SocialLoginButton(
-                  text: 'Sign in with Facebook',
-                  asset: 'assets/logos/facebook-icon.png',
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SocialLoginButton extends StatelessWidget {
-  final String text;
-  final String asset;
-
-  const SocialLoginButton({
-    required this.text,
-    required this.asset,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: OutlinedButton(
-        onPressed: () {},
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          side: BorderSide(color: Colors.grey.shade300),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(asset, height: 20),
-            const SizedBox(width: 10),
-            Text(text),
           ],
         ),
       ),

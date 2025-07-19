@@ -11,6 +11,7 @@ import 'package:medilink/firebase_options.dart';
 
 import 'app.dart';
 import 'data/repositories/authentication_repository.dart';
+import 'data/user/user_repository.dart';
 
 
 Future<void> main() async {
@@ -31,9 +32,12 @@ Future<void> main() async {
 
   MapboxOptions.setAccessToken(accessToken!);
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then(
-      (FirebaseApp value) => Get.put(AuthenticationRepository())
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then((FirebaseApp value) {
+    // Initialize both AuthenticationRepository and UserRepository
+    Get.put(AuthenticationRepository());
+    Get.put(UserRepository()); // Add this line
+  });
 
 
   runApp(App());
