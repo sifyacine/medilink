@@ -74,6 +74,8 @@ flutter:
     - assets/images/on_boarding_images/
     - assets/images/reviews/
     - assets/logos/
+    - assets/data/states_cities.json
+
 
     - assets/icons/services/
     - assets/doctors/

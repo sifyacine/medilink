@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:medilink/features/personalization/screens/profile/widgets/change_name.dart';
+import 'package:medilink/features/personalization/screens/profile/widgets/changr_personal_info.dart';
 import 'package:medilink/features/personalization/screens/profile/widgets/profile_menu.dart';
 import 'package:medilink/utils/loaders/shimmer_loader.dart';
 
@@ -73,23 +75,9 @@ class ProfileScreen extends StatelessWidget {
                 value: controller.user.value.fullName,
               ),
               TProfileMenu(
-                onPressed: () {},
+                onPressed: () => Get.to(ChangeName()),
                 title: 'Username',
                 value: controller.user.value.username,
-              ),
-
-              const SizedBox(height: TSizes.spaceBtwItems / 2),
-              const Divider(),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              ///heading personal info
-              const TSectionHeading(title: "Personal information"),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              TProfileMenu(
-                icon: Iconsax.copy,
-                title: 'User-ID',
-                value: controller.user.value.id,
               ),
               TProfileMenu(
                 onPressed: () {},
@@ -101,16 +89,45 @@ class ProfileScreen extends StatelessWidget {
                 title: 'Phone Number',
                 value: controller.user.value.phoneNumber,
               ),
+
+              const SizedBox(height: TSizes.spaceBtwItems / 2),
+              const Divider(),
+              const SizedBox(height: TSizes.spaceBtwItems),
+
+              ///heading personal info
+              TSectionHeading(title: "Personal information", showActionButton: true, buttonTitle: "update", onPressed: () => Get.to(UpdatePersonalInfoScreen()), ),
+              const SizedBox(height: TSizes.spaceBtwItems),
+
               TProfileMenu(
-                onPressed: () {},
                 title: 'Gender',
                 value: controller.user.value.gender.toString(),
               ),
               TProfileMenu(
-                onPressed: () {},
+                title: 'Address',
+                value: controller.user.value.address.toString(),
+              ),
+              TProfileMenu(
+                title: 'Blood type',
+                value: controller.user.value.bloodType.toString(),
+              ),
+              TProfileMenu(
                 title: 'Date  Of Birth',
                 value: controller.user.value.dateOfBirth.toString(),
               ),
+              TProfileMenu(
+                title: 'State',
+                value: controller.user.value.state.toString(),
+              ),
+              TProfileMenu(
+                title: 'City',
+                value: controller.user.value.city.toString(),
+              ),
+              TProfileMenu(
+                title: 'Role',
+                value: controller.user.value.role.toString(),
+              ),
+
+
 
               const Divider(),
               const SizedBox(height: TSizes.spaceBtwItems),

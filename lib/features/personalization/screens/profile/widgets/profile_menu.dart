@@ -41,9 +41,9 @@ class TProfileMenu extends StatelessWidget {
             ),
             Expanded(
                 child: Icon(
-              icon,
-              size: 18,
-            )),
+                  icon,
+                  size: 18,
+                )),
           ],
         ),
       ),
