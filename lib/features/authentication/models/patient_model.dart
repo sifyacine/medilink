@@ -64,7 +64,6 @@ class UserModel {
     );
   }
 
-  // Factory constructor to create a UserModel from a Firestore snapshot
   factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data();
     if (data != null) {
@@ -76,7 +75,7 @@ class UserModel {
         email: data['email'] ?? "",
         phoneNumber: data['phoneNumber'] ?? "",
         medicalFolderUrl: data['medical_folder_url'] as String?,
-        profilePicUrl: data['profile_pic_url'] as String?,
+        profilePicUrl: data['ProfilePicture'] as String?, // Changed from 'profile_pic_url' to 'ProfilePicture'
         dateOfBirth: data['date_of_birth'] != null ? DateTime.parse(data['date_of_birth']) : null,
         city: data['city'] as String?,
         state: data['state'] as String?,
@@ -85,7 +84,7 @@ class UserModel {
         gender: data['gender'] as String?,
         emergencyContact: data['emergency_contact'] != null ? Map<String, String>.from(data['emergency_contact']) : null,
         address: data['address'] as String?,
-        role: data['role'] as String?, // Added role mapping
+        role: data['role'] as String?,
       );
     } else {
       throw Exception('Document data is null');

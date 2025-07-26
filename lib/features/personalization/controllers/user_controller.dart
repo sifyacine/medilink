@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../data/repositories/authentication_repository.dart';
 import '../../../data/user/user_repository.dart';
@@ -19,6 +20,8 @@ class UserController extends GetxController {
 
   final user = UserModel.empty().obs;
   final profileLoading = false.obs;
+  final imageUpLoading = false.obs;
+
 
   final verifyEmail = TextEditingController();
   final hidePassword = true.obs;
@@ -37,7 +40,8 @@ class UserController extends GetxController {
       profileLoading.value = true;
       final user = await UserRepository.instance.fetchUserDetails();
       this.user(user);
-      print("user is fetrched");
+      print("user is fetched $user");
+      print(user);
       profileLoading.value = false;
     } catch (e) {
       print("error: $e");
@@ -99,42 +103,89 @@ class UserController extends GetxController {
   }
 
 
-  // save user record
+  // Save user Record from any Registration provider
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     try {
-      if (userCredentials != null && userCredentials.user != null) {
-        final user = UserModel(
-          id: userCredentials.user!.uid,
-          firstName: UserModel.nameParts(userCredentials.user!.displayName ?? "")[0],
-          lastName: UserModel.nameParts(userCredentials.user!.displayName ?? "").sublist(1).join(' '),
-          username: UserModel.generateUsername(userCredentials.user!.displayName ?? ""),
-          email: userCredentials.user!.email ?? '',
-          phoneNumber: userCredentials.user!.phoneNumber ?? '',
-        );
+      // First Update Rx User and then check if user data is already stored. If not store new data
+      await fetchUserRecord();
 
-        final userRepository = Get.put(UserRepository());
-        await userRepository.saveUserRecord(user);
+      // If no record already stored.
+      if (user.value.id.isEmpty) {
+        if (userCredentials != null) {
+          // Convert Name to First and Last Name
+          final nameParts = UserModel.nameParts(userCredentials.user!.displayName ?? '');
+          final username = UserModel.generateUsername(userCredentials.user!.displayName ?? '');
 
-        TLoaders.successSnackBar(
-          title: "Data is saved",
-          message: "data have been saved successfully",
-        );
-      } else {
-        print("UserCredentials or user is null");
+          // Map Data
+          final user = UserModel(
+            id: userCredentials.user!.uid,
+            firstName: nameParts[0],
+            lastName: nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+            username: username,
+            email: userCredentials.user!.email ?? '',
+            phoneNumber: userCredentials.user!.phoneNumber ?? '',
+            profilePicUrl: userCredentials.user!.photoURL ?? '',
+            role: 'patient',
+          );
+
+          // Save user data
+          final userRepository = Get.put(UserRepository());
+          await userRepository.saveUserRecord(user);
+        }
       }
-    } catch (e, stackTrace) {
-      print("Error saving user record: $e");
-      print("Stack trace: $stackTrace");
+    } catch (e) {
       TLoaders.warningSnackBar(
-        title: "Data not saved",
-        message: "Something went wrong while saving your information.",
+        title: 'Data not saved',
+        message: 'Something went wrong while saving your information. You can re-save your data in your Profile.',
       );
     }
   }
 
+  /// Upload Profile Image
+  uploadUserProfilePicture() async {
+
+    try {
+
+      final image = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 70,
+        maxHeight: 512,
+        maxWidth: 512,
+      );
+
+      if (image != null) {
+        imageUpLoading.value = true;
+        // Upload Image
+        final userRepository = Get.put(UserRepository());
+        final imageUrl = await userRepository.uploadImage('Users/Images/Profile/', image);
+
+        // Update User Image Record
+        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
+        await userRepository.updateSingleField(json);
+
+        user.value.profilePicUrl = imageUrl;
+        user.refresh();
+        TLoaders.successSnackBar(
+          title: 'Congratulations',
+          message: 'Your Profile Image has been updated!',
+        );
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(
+        title: 'OhSnap',
+        message: 'Something went wrong: $e',
+      );
+    } finally {
+      imageUpLoading.value = false;
+    }
+  }
+
+
+
   /// --- RE-AUTHENTICATE before deleting
   Future<void> reAuthenticateEmailAndPasswordUser() async {
     try {
+
       TFullScreenLoader.openLoadingDialog('Processing', TImages.docerAnimation);
 
       // Check Internet

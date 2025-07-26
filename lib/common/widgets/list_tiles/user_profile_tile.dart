@@ -6,6 +6,7 @@ import 'package:medilink/features/personalization/controllers/user_controller.da
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
+import '../../../utils/loaders/shimmer_loader.dart';
 import '../images/circular_images.dart';
 
 
@@ -20,15 +21,21 @@ class TUserProfileTile extends StatelessWidget {
     Get.put(UserController());
     final controller = UserController.instance;
     return ListTile(
-      title: Text(controller.user.value.fullName, style: TextStyle(color: Colors.white)),
-      subtitle: Text(controller.user.value.email, style: TextStyle(color: Colors.white)),
+      title: Text(controller.user.value.fullName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      subtitle: GestureDetector(onLongPress: (){}, child: Text(controller.user.value.email, style: TextStyle(color: Colors.white, fontSize: 10))),
       trailing: IconButton(onPressed: onPressed, icon: const Icon(Iconsax.edit, color: TColors.white,),),
-      leading: const TCircularImage(
-        image: TImages.user,
-        height: 50,
-        width: 50,
-        padding: 0,
-      ),
+      leading:Obx(() {
+        final networkImage = controller.user.value.profilePicUrl;
+        final image = networkImage!.isNotEmpty ? networkImage : TImages.user;
+        return controller.imageUpLoading.value ?
+        TShimmerEffect(width: 56, height: 56, radius: 56,)
+            :TCircularImage(
+          isNetworkImage: networkImage.isNotEmpty,
+          image: image,
+          width: 56,
+          height: 56,
+        );
+      }),
     );
   }
 }
