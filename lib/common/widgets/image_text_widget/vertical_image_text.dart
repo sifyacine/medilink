@@ -10,6 +10,7 @@ class TVerticalTextImage extends StatelessWidget {
   final Color textColor;
   final Color? backgroundColor;
   final void Function()? onTap;
+  final bool isNetworkImage;
 
   const TVerticalTextImage({
     super.key,
@@ -18,6 +19,7 @@ class TVerticalTextImage extends StatelessWidget {
     this.textColor = TColors.white,
     this.backgroundColor,
     this.onTap,
+    this.isNetworkImage = false,
   });
 
   @override
@@ -32,21 +34,23 @@ class TVerticalTextImage extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(TSizes.sm),
-              height: 64,
-              width: 64,
+              height: 55,
+              width: 55,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 color:
-                    backgroundColor ?? (isDark ? TColors.primary.withAlpha(46) : TColors.primary.withAlpha(36)),
+                    backgroundColor ??
+                    (isDark
+                        ? TColors.primary.withAlpha(46)
+                        : TColors.primary.withAlpha(36)),
               ),
               child: Center(
                 child:
                     image.toLowerCase().endsWith('.svg')
                         ? SvgPicture.asset(image, width: 40, height: 40)
-                        : Image.asset(
-                          image,
-                          fit: BoxFit.cover,
-                        ),
+                        : isNetworkImage
+                        ? Image.network(image, fit: BoxFit.cover)
+                        : Image.asset(image, fit: BoxFit.cover),
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwItems / 2),

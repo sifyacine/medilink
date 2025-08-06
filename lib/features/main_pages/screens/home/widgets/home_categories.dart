@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../common/widgets/image_text_widget/vertical_image_text.dart';
-import '../../../../../utils/constants/image_strings.dart';
 import '../../clinic_list_page/clinic_list_page.dart';
 import '../../doctors/Docotors_screen.dart';
 import '../../emergencies/emergencies_map_page.dart';
