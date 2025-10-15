@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:medilink/features/authentication/models/nurse_model.dart';
 
 import '../../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../../utils/exceptions/firebase_exceptions.dart';
@@ -22,6 +23,23 @@ class UserRepository extends GetxController {
 
   /// Function to save user data in Firestore
   Future<void> saveUserRecord(UserModel user) async {
+    try {
+      await _db.collection("Users").doc(user.id).set(user.toJson());
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw Exception("Something went wrong, please try again");
+    }
+  }
+
+  /// Function to save Nurse data in Firestore
+  Future<void> saveNurseRecord(NurseModel user) async {
     try {
       await _db.collection("Users").doc(user.id).set(user.toJson());
     } on FirebaseAuthException catch (e) {

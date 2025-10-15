@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:medilink/features/personalization/screens/profile/widgets/change_name.dart';
 import 'package:medilink/features/personalization/screens/profile/widgets/changr_personal_info.dart';
@@ -20,8 +19,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(UserController());
-    final controller = UserController.instance;
+    final controller = Get.put(UserController());
+
     return Scaffold(
       /// appbar
       appBar: const TAppBar(title: Text('Profile'), showBackArrow: true),
@@ -38,11 +37,12 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Obx(() {
-                      final networkImage = controller.user.value.profilePicUrl;
-                      final image = networkImage!.isNotEmpty ? networkImage : TImages.user;
-                      return controller.imageUpLoading.value ?
-                      TShimmerEffect(width: 80, height: 80, radius: 80,)
-                          :TCircularImage(
+                      final networkImage = controller.user.value.profilePicUrl ?? '';
+                      final image = networkImage.isNotEmpty ? networkImage : TImages.user;
+
+                      return controller.imageUpLoading.value
+                          ? const TShimmerEffect(width: 80, height: 80, radius: 80)
+                          : TCircularImage(
                         isNetworkImage: networkImage.isNotEmpty,
                         image: image,
                         width: 80,
@@ -69,65 +69,68 @@ class ProfileScreen extends StatelessWidget {
               const TSectionHeading(title: "Profile Information"),
               const SizedBox(height: TSizes.spaceBtwItems),
 
-              TProfileMenu(
+              Obx(() => TProfileMenu(
                 onPressed: () {},
                 title: 'Name',
-                value: controller.user.value.fullName,
-              ),
-              TProfileMenu(
-                onPressed: () => Get.to(ChangeName()),
+                value: controller.user.value.fullName ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
+                onPressed: () => Get.to(() => ChangeName()),
                 title: 'Username',
-                value: controller.user.value.username,
-              ),
-              TProfileMenu(
+                value: controller.user.value.username ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
                 onPressed: () {},
                 title: 'E-mail',
-                value: controller.user.value.email,
-              ),
-              TProfileMenu(
+                value: controller.user.value.email ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
                 onPressed: () {},
                 title: 'Phone Number',
-                value: controller.user.value.phoneNumber,
-              ),
+                value: controller.user.value.phoneNumber ?? 'N/A',
+              )),
 
               const SizedBox(height: TSizes.spaceBtwItems / 2),
               const Divider(),
               const SizedBox(height: TSizes.spaceBtwItems),
 
               ///heading personal info
-              TSectionHeading(title: "Personal information", showActionButton: true, buttonTitle: "update", onPressed: () => Get.to(UpdatePersonalInfoScreen()), ),
+              TSectionHeading(
+                title: "Personal information",
+                showActionButton: true,
+                buttonTitle: "update",
+                onPressed: () => Get.to(() => UpdatePersonalInfoScreen()),
+              ),
               const SizedBox(height: TSizes.spaceBtwItems),
 
-              TProfileMenu(
+              Obx(() => TProfileMenu(
                 title: 'Gender',
-                value: controller.user.value.gender.toString(),
-              ),
-              TProfileMenu(
+                value: controller.user.value.gender?.toString() ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
                 title: 'Address',
-                value: controller.user.value.address.toString(),
-              ),
-              TProfileMenu(
+                value: controller.user.value.address?.toString() ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
                 title: 'Blood type',
-                value: controller.user.value.bloodType.toString(),
-              ),
-              TProfileMenu(
-                title: 'Date  Of Birth',
-                value: controller.user.value.dateOfBirth.toString(),
-              ),
-              TProfileMenu(
+                value: controller.user.value.bloodType?.toString() ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
+                title: 'Date Of Birth',
+                value: controller.user.value.dateOfBirth?.toString() ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
                 title: 'State',
-                value: controller.user.value.state.toString(),
-              ),
-              TProfileMenu(
+                value: controller.user.value.state?.toString() ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
                 title: 'City',
-                value: controller.user.value.city.toString(),
-              ),
-              TProfileMenu(
+                value: controller.user.value.city?.toString() ?? 'N/A',
+              )),
+              Obx(() => TProfileMenu(
                 title: 'Role',
-                value: controller.user.value.role.toString(),
-              ),
-
-
+                value: controller.user.value.role?.toString() ?? 'N/A',
+              )),
 
               const Divider(),
               const SizedBox(height: TSizes.spaceBtwItems),

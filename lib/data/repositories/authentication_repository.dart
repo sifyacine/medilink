@@ -12,6 +12,7 @@ import '../../features/authentication/screens/login/login_screen.dart';
 import '../../features/authentication/screens/onboarding/onboarding_screen.dart';
 import '../../features/authentication/screens/signup/verify_email.dart';
 import '../../navigation_menu.dart';
+import '../../nurse_navigation_menu.dart';
 import '../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../utils/exceptions/firebase_exceptions.dart';
 import '../../utils/exceptions/format_exceptions.dart';
@@ -36,11 +37,30 @@ class AuthenticationRepository extends GetxController {
   }
 
   // Function to Show Relevant Screen
+  // Function to Show Relevant Screen with Role-Based Navigation
   screenRedirect() async {
     final user = _auth.currentUser;
     if (user != null) {
       if (user.emailVerified) {
-        Get.offAll(() => const NavigationMenu());
+        // Fetch user role from Firestore
+        try {
+          final userDoc = await UserRepository.instance.fetchUserDetails();
+          final role = userDoc.role; // Assuming your User model has a 'role' field
+
+          // Navigate based on role
+          if (role == 'nurse') {
+            Get.offAll(() => const NurseNavigationMenu());
+          } else if (role == 'patient') {
+            Get.offAll(() => const NavigationMenu());
+          } else {
+            // Default navigation for other roles or if role is not set
+            Get.offAll(() => const NavigationMenu());
+          }
+        } catch (e) {
+          // If there's an error fetching the role, navigate to default screen
+          print('Error fetching user role: $e');
+          Get.offAll(() => const NavigationMenu());
+        }
       } else {
         Get.off(() => VerifyEmailScreen(email: user.email!));
       }
@@ -50,8 +70,8 @@ class AuthenticationRepository extends GetxController {
 
       // Check if it's the first time launching the app
       deviceStorage.read('isFirstTime') == true
-          ? Get.offAll(() => const OnBoardingScreen()) // Redirect to Onboarding Screen if it's the first time
-          : Get.offAll(() => const LoginScreen()); // Redirect to Login Screen if not the first time
+          ? Get.offAll(() => const OnBoardingScreen())
+          : Get.offAll(() => const LoginScreen());
     }
   }
 

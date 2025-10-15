@@ -22,38 +22,6 @@ class UpdatePersonalInfoScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// Gender Dropdown
-              DropdownButtonFormField<String>(
-                value: controller.gender.value.isNotEmpty ? controller.gender.value : null,
-                decoration: const InputDecoration(labelText: 'Gender'),
-                items: controller.genderOptions
-                    .map((gender) => DropdownMenuItem(value: gender, child: Text(gender)))
-                    .toList(),
-                onChanged: (value) => controller.gender.value = value ?? '',
-              ),
-
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-
-              /// Address
-              TextFormField(
-                controller: controller.address,
-                decoration: const InputDecoration(labelText: 'Address'),
-              ),
-
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-
-              /// Blood Type
-              DropdownButtonFormField<String>(
-                value: controller.bloodType.value.isNotEmpty ? controller.bloodType.value : null,
-                decoration: const InputDecoration(labelText: 'Blood Type'),
-                items: controller.bloodTypeOptions
-                    .map((blood) => DropdownMenuItem(value: blood, child: Text(blood)))
-                    .toList(),
-                onChanged: (value) => controller.bloodType.value = value ?? '',
-              ),
-
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-
               /// Date of Birth Picker
               InkWell(
                 onTap: () async {
@@ -81,6 +49,14 @@ class UpdatePersonalInfoScreen extends StatelessWidget {
 
               const SizedBox(height: TSizes.spaceBtwInputFields),
 
+              /// Address
+              TextFormField(
+                controller: controller.address,
+                decoration: const InputDecoration(labelText: 'Address'),
+              ),
+
+              const SizedBox(height: TSizes.spaceBtwInputFields),
+
               /// State Dropdown
               Obx(() => DropdownButtonFormField<String>(
                 value: controller.state.value.isNotEmpty ? controller.state.value : null,
@@ -104,6 +80,7 @@ class UpdatePersonalInfoScreen extends StatelessWidget {
                     .toList(),
                 onChanged: (value) => controller.city.value = value ?? '',
               )),
+
 
               const SizedBox(height: TSizes.spaceBtwSections),
 

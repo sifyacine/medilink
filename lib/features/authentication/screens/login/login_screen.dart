@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/features/authentication/screens/login/widgets/login_form.dart';
+import 'package:medilink/features/authentication/screens/login/widgets/login_header.dart';
 
 import '../../../../common/styles/spacing_styles.dart';
 
@@ -18,7 +19,8 @@ class LoginScreen extends StatelessWidget {
           padding: TSpacingStyles.paddingWithAppBarHeight,
           child: Column(
             children: [
-
+              /// logo, title and subtitle
+              TLoginHeader(),
               // Login form
               TLoginForm(),
             ],

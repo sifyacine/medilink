@@ -25,7 +25,7 @@ class NotificationIconButton extends StatelessWidget {
       clipBehavior: Clip.none, // Allow badge to overflow the stack boundary.
       children: [
         IconButton(
-          icon: Icon(icon, size: iconSize, color: isDark? TColors.white: TColors.black,),
+          icon: Icon(icon, size: iconSize, color: TColors.white,),
           onPressed: onPressed,
         ),
         if (notificationCount > 0)
