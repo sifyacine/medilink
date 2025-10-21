@@ -17,6 +17,7 @@ class SearchBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
@@ -28,8 +29,9 @@ class SearchBarWidget extends StatelessWidget {
               height: 48.0,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? TColors.dark : Colors.white,
                 borderRadius: BorderRadius.circular(25),
+                border: Border.all(color: Colors.grey[300]!),
               ),
               child: Row(
                 children: [
@@ -68,14 +70,17 @@ class SearchBarWidget extends StatelessWidget {
               onTap: () {
                 showModalBottomSheet(
                   context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
                   builder: (context) => const FilterBottomSheet(),
                 );
               },
               child: Container(
-                height: 36.0,
+                height: 48.0, // Match search bar height for consistency
                 decoration: BoxDecoration(
                   color: TColors.primary,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(25),
                 ),
                 child: const Icon(Icons.filter_list, color: Colors.white),
               ),

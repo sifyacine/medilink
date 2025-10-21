@@ -6,9 +6,10 @@ import 'package:medilink/features/main_pages/screens/appointment_details/Appoint
 import 'package:medilink/utils/constants/colors.dart';
 
 import '../../../../utils/helpers/helper_functions.dart';
+import '../../../authentication/models/nurse_model.dart';
 
 class NurseDetailsPage extends StatelessWidget {
-  final Nurse nurse;
+  final NurseModel nurse;
 
   const NurseDetailsPage({Key? key, required this.nurse}) : super(key: key);
 
@@ -74,6 +75,9 @@ class NurseDetailsPage extends StatelessWidget {
   // Nurse Information with Profile Picture, Name, Title, and Location
   Widget buildNurseInfo(context) {
     final isDark = THelperFunctions.isDarkMode(context);
+    final ImageProvider avatarImage = nurse.profilePicUrl != null && nurse.profilePicUrl!.isNotEmpty
+        ? NetworkImage(nurse.profilePicUrl!)
+        : const AssetImage("assets/images/user.png");
 
     return Column(
       children: [
@@ -91,9 +95,7 @@ class NurseDetailsPage extends StatelessWidget {
             ),
             child: CircleAvatar(
               radius: 80,
-              backgroundImage: nurse.nursePic.isNotEmpty
-                  ? AssetImage(nurse.nursePic)
-                  : const AssetImage("assets/images/user.png"),
+              backgroundImage: avatarImage,
             ),
           ),
         ),
@@ -125,7 +127,7 @@ class NurseDetailsPage extends StatelessWidget {
             const Icon(Icons.location_on, color: Colors.grey, size: 16),
             const SizedBox(width: 4),
             Text(
-              "${nurse.city}, ${nurse.state}",
+              "${nurse.city ?? ''}, ${nurse.state ?? ''}",
               style: const TextStyle(
                 fontSize: 14,
                 color: Colors.grey,
@@ -139,15 +141,18 @@ class NurseDetailsPage extends StatelessWidget {
 
   // Statistics Section with Patients, Experience, and Rating
   Widget buildStatistics() {
+    final int? age = nurse.age;
+    final double rating = nurse.rating ?? 0.0;
+    final int reviewCount = nurse.reviewCount ?? 0;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        buildStatCard("Patients", "500", Iconsax.personalcard),
-        // Placeholder value
-        buildStatCard("Experience", "6 Years", Iconsax.clock),
-        // Placeholder value
-        buildStatCard("Rating", calculateAverageRating().toStringAsFixed(1),
-            Iconsax.star),
+        buildStatCard("Patients", "${reviewCount.toString()}", Iconsax.personalcard),
+        // Using reviewCount as proxy for patients; adjust if needed
+        buildStatCard("Experience", age != null ? "${age} Years" : "N/A", Iconsax.clock),
+        // Using age as proxy for experience; consider adding a dedicated field
+        buildStatCard("Rating", rating.toStringAsFixed(1), Iconsax.star),
       ],
     );
   }
@@ -178,9 +183,8 @@ class NurseDetailsPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          Icon(icon, color: TColors.white,size: 18),
+          Icon(icon, color: TColors.white, size: 18),
           const SizedBox(height: 4),
-
           Text(
             value,
             style: const TextStyle(
@@ -209,9 +213,7 @@ class NurseDetailsPage extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          "${nurse.fullName} is a nurse in ${nurse
-              .city}. Her qualification is MBBS - JCS. She is a senior consultant in the department of medical university hospital.",
-          // Placeholder text
+          nurse.bio ?? "${nurse.fullName} is a nurse in ${nurse.city ?? 'Unknown'}. No additional bio available.",
           style: const TextStyle(
             fontSize: 14,
             color: Colors.grey,
@@ -224,6 +226,13 @@ class NurseDetailsPage extends StatelessWidget {
   // Availability Section
   Widget buildAvailability(context) {
     final isDark = THelperFunctions.isDarkMode(context);
+    String availabilityText = "Availability not specified";
+    if (nurse.availability != null && nurse.availability!.isNotEmpty) {
+      // Simple formatting: assume map like {'monday': '10:00-20:00'}; display first entry
+      final firstEntry = nurse.availability!.entries.first;
+      availabilityText = "${firstEntry.key}: ${firstEntry.value}";
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -236,9 +245,9 @@ class NurseDetailsPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
-          "Tuesday/Thursday 10:00/20:00", // Placeholder text
-          style: TextStyle(
+        Text(
+          availabilityText,
+          style: const TextStyle(
             fontSize: 14,
             color: Colors.grey,
           ),
@@ -250,6 +259,8 @@ class NurseDetailsPage extends StatelessWidget {
   // Consultation Fee Section
   Widget buildConsultationFee(context) {
     final isDark = THelperFunctions.isDarkMode(context);
+    // Placeholder; consider adding 'fee' field to NurseModel if needed
+    const String feeText = "1500.00 DA";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -262,9 +273,9 @@ class NurseDetailsPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
-          "1500.00 DA", // Placeholder value
-          style: TextStyle(
+        Text(
+          feeText,
+          style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -280,7 +291,7 @@ class NurseDetailsPage extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          Get.to(() => AppointmentPage());
+          Get.to(() => AppointmentPage()); // Pass nurse if needed: AppointmentPage(nurse: nurse)
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: TColors.primary,
@@ -300,10 +311,5 @@ class NurseDetailsPage extends StatelessWidget {
     );
   }
 
-  // Calculate Average Rating from Nurse Model
-  double calculateAverageRating() {
-    if (nurse.reviews.isEmpty) return 0.0;
-    return nurse.reviews.map((r) => r.rating).reduce((a, b) => a + b) /
-        nurse.reviews.length;
-  }
+// Removed calculateAverageRating as rating is now direct in model
 }

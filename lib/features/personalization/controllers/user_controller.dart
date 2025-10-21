@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../data/repositories/authentication_repository.dart';
@@ -21,19 +22,30 @@ class UserController extends GetxController {
   final user = UserModel.empty().obs;
   final profileLoading = false.obs;
   final imageUpLoading = false.obs;
+  final userData = Rxn<Map<String, dynamic>>();
+  final _storage = GetStorage();
 
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loadUserData();
+    fetchUserRecord();
+  }
+
+  // Load user data from GetStorage if available
+  void _loadUserData() {
+    final savedData = _storage.read<Map<String, dynamic>>('userData');
+    if (savedData != null) {
+      userData.value = savedData;
+    }
+  }
 
   final verifyEmail = TextEditingController();
   final hidePassword = true.obs;
   final verifyPassword = TextEditingController();
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
-
-  @override
-  void onInit() {
-    super.onInit();
-    fetchUserRecord();
-  }
 
   Future<void> fetchUserRecord() async {
     try {

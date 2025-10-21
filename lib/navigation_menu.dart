@@ -6,6 +6,7 @@ import 'package:medilink/utils/constants/colors.dart';
 import 'package:medilink/utils/helpers/helper_functions.dart';
 
 import 'features/chat/screens/main_chat/conversations_page.dart';
+import 'features/main_pages/screens/announcment/announcement_page.dart';
 import 'features/main_pages/screens/apointments/planning_page.dart';
 import 'features/main_pages/screens/home/home.dart';
 import 'features/personalization/screens/profile/profile.dart';
@@ -43,6 +44,9 @@ class NavigationMenu extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Icon(Iconsax.message),
               label: '', // No label
+            ),BottomNavigationBarItem(
+              icon: Icon(Iconsax.reserve),
+              label: '', // No label
             ),
             BottomNavigationBarItem(
               icon: Icon(Iconsax.calendar),
@@ -67,6 +71,7 @@ class NavigationController extends GetxController {
   final screens = [
     HomeScreen(),
     MessagesPage(),
+    AnnouncementPage(),
     const PlanningScreen(),
     const SettingsPage(),
   ];

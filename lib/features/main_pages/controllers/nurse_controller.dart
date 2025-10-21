@@ -1,16 +1,40 @@
 import 'package:get/get.dart';
-import '../../../data/dummy_data.dart';
-import '../models/nurse_model.dart';
-
-
+import '../../../data/services/nurse_services.dart';
+import '../../authentication/models/nurse_model.dart';
 
 class NurseController extends GetxController {
-  // All nurses (dummy data)
-  final allNurses = dummyNurses.obs;
+  final NurseService _nurseService = NurseService();
+
+  // All nurses loaded from service
+  final RxList<NurseModel> allNurses = <NurseModel>[].obs;
+
+  // In NurseController class
+  final RxBool isLoading = false.obs;
+
+// Update loadAllNurses method
+  Future<void> loadAllNurses() async {
+    isLoading.value = true;
+    try {
+      allNurses.value = await _nurseService.getAllNurses();
+    } catch (e) {
+      print('Error loading nurses: $e');
+      // Optionally show a snackbar: Get.snackbar('Error', 'Failed to load nurses');
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   // Reactive search query and selected filter.
   final searchQuery = ''.obs;
   final selectedFilter = 'All'.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadAllNurses();
+  }
+
+
 
   // Update search query.
   void updateSearchQuery(String query) {
@@ -23,10 +47,10 @@ class NurseController extends GetxController {
   }
 
   // Computed list based on search and filter.
-  List<Nurse> get filteredNurses {
-    List<Nurse> nurses = allNurses;
+  List<NurseModel> get filteredNurses {
+    List<NurseModel> nurses = List<NurseModel>.from(allNurses);
 
-    // Apply search query filtering.
+    // Apply search query filtering on fullName.
     if (searchQuery.value.isNotEmpty) {
       nurses = nurses
           .where((nurse) => nurse.fullName
@@ -35,11 +59,10 @@ class NurseController extends GetxController {
           .toList();
     }
 
-    // Apply filter by specialty if not "All".
+    // Apply filter by specialization if not "All".
     if (selectedFilter.value != 'All') {
       nurses = nurses
-          .where((nurse) => nurse.nursingSpecialties
-          .contains(selectedFilter.value))
+          .where((nurse) => nurse.specialization == selectedFilter.value)
           .toList();
     }
     return nurses;
