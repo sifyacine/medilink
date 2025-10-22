@@ -11,7 +11,8 @@ class NurseCard extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final VoidCallback? onCardTap;
-  final double? height; // Made optional; null for content-based sizing
+  final double? height;
+  final double? width;
 
   const NurseCard({
     Key? key,
@@ -19,7 +20,8 @@ class NurseCard extends StatelessWidget {
     this.margin,
     this.padding,
     this.onCardTap,
-    this.height, // No default; pass explicitly if needed
+    this.height,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -35,225 +37,239 @@ class NurseCard extends StatelessWidget {
     final Color secondaryTextColor = isDark ? TColors.grey : Colors.grey[600]!;
     final Color tertiaryTextColor = isDark ? Colors.grey[400]! : Colors.grey[500]!;
 
-    // Build the card content
-    Widget cardContent = Container(
+    return Container(
       margin: margin ?? const EdgeInsets.all(8),
-      padding: padding ?? const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: TColors.primary.withOpacity(0.1), width: 0.5),
-        boxShadow: [
-          BoxShadow(
-            color: TColors.primary.withOpacity(0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min, // Ensures column shrinks to fit children
-        children: [
-          // Avatar with online indicator (assuming isActive)
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Center(
-                child: CircleAvatar(
-                  radius: 32,
-                  backgroundImage: avatarImage,
-                  backgroundColor: TColors.primary.withOpacity(0.1),
-                ),
-              ),
-              Positioned(
-                bottom: -5,
-                right: -5,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: nurse.isActive ? Colors.green : Colors.orange,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: cardColor, width: 2),
-                  ),
-                  child: const Icon(
-                    Iconsax.user,
-                    color: Colors.white,
-                    size: 12,
-                  ),
-                ),
+      width: width, // Allow width control
+      height: height, // Allow height control
+      child: GestureDetector(
+        onTap: onCardTap,
+        child: Container(
+          padding: padding ?? const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: cardColor,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: TColors.primary.withOpacity(0.1), width: 0.5),
+            boxShadow: [
+              BoxShadow(
+                color: TColors.primary.withOpacity(0.1),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          // Nurse Name and Specialization
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                nurse.fullName,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: textColor,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              const SizedBox(height: 2),
-              if (nurse.specialization != null && nurse.specialization!.isNotEmpty)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: TColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    nurse.specialization!,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: TColors.primary,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          // Enhanced Rating Row with icon
-          Row(
-            children: [
-              Icon(Iconsax.star1, color: Colors.amber, size: 16),
-              const SizedBox(width: 4),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final bool isCompact = constraints.maxHeight < 200 || constraints.maxWidth < 160;
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Avatar with online indicator - responsive sizing
+                  Center(
+                    child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
-                        for (int i = 0; i < 5; i++)
-                          Icon(
-                            i < rating.floor()
-                                ? Icons.star
-                                : (i < rating && rating % 1 >= 0.5)
-                                ? Icons.star_half
-                                : Icons.star_border,
-                            color: Colors.amber,
-                            size: 12,
-                          ),
-                        const SizedBox(width: 4),
-                        Text(
-                          rating.toStringAsFixed(1),
-                          style: TextStyle(
-                            color: secondaryTextColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                        CircleAvatar(
+                          radius: isCompact ? 24 : 32,
+                          backgroundImage: avatarImage,
+                          backgroundColor: TColors.primary.withOpacity(0.1),
+                        ),
+                        Positioned(
+                          bottom: isCompact ? -4 : -5,
+                          right: isCompact ? -4 : -5,
+                          child: Container(
+                            padding: EdgeInsets.all(isCompact ? 3 : 4),
+                            decoration: BoxDecoration(
+                              color: nurse.isActive ? Colors.green : Colors.orange,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: cardColor, width: 2),
+                            ),
+                            child: Icon(
+                              Iconsax.user,
+                              color: Colors.white,
+                              size: isCompact ? 10 : 12,
+                            ),
                           ),
                         ),
-                        if (reviewCount > 0) ...[
-                          const SizedBox(width: 2),
-                          Text(
-                            '($reviewCount)',
-                            style: TextStyle(
-                              color: tertiaryTextColor,
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
                       ],
                     ),
-                    if (nurse.isVerified)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Iconsax.shield_tick, color: Colors.green, size: 12),
-                          const SizedBox(width: 2),
-                          Text(
-                            'Verified',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
+                  ),
+                  SizedBox(height: isCompact ? 8 : 12),
+
+                  // Nurse Name and Specialization
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        nurse.fullName,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: isCompact ? 14 : 16,
+                          color: textColor,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          // Location with Icon
-          Row(
-            children: [
-              Icon(Icons.location_on, color: tertiaryTextColor, size: 14),
-              const SizedBox(width: 4),
-              Expanded(
-                child: Text(
-                  "${nurse.city ?? ''}${nurse.city != null && nurse.state != null ? ', ' : ''}${nurse.state ?? ''}",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: secondaryTextColor,
+                      SizedBox(height: isCompact ? 2 : 4),
+                      if (nurse.specialization != null && nurse.specialization!.isNotEmpty)
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: isCompact ? 6 : 8,
+                            vertical: isCompact ? 2 : 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: TColors.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            nurse.specialization!,
+                            style: TextStyle(
+                              fontSize: isCompact ? 10 : 12,
+                              fontWeight: FontWeight.w500,
+                              color: TColors.primary,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                    ],
                   ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          // Workplace or Age snippet
-          if (nurse.workplace != null && nurse.workplace!.isNotEmpty)
-            Row(
-              children: [
-                Icon(Iconsax.building, color: tertiaryTextColor, size: 14),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Text(
-                    nurse.workplace!,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: tertiaryTextColor,
-                      fontStyle: FontStyle.italic,
+                  SizedBox(height: isCompact ? 6 : 8),
+
+                  // Rating Row
+                  Row(
+                    children: [
+                      Icon(Iconsax.star1, color: Colors.amber, size: isCompact ? 14 : 16),
+                      SizedBox(width: isCompact ? 2 : 4),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                ...List.generate(5, (i) {
+                                  IconData icon;
+                                  if (i < rating.floor()) {
+                                    icon = Icons.star;
+                                  } else if (i < rating && rating % 1 >= 0.5) {
+                                    icon = Icons.star_half;
+                                  } else {
+                                    icon = Icons.star_border;
+                                  }
+                                  return Icon(icon, color: Colors.amber, size: isCompact ? 10 : 12);
+                                }),
+                                SizedBox(width: isCompact ? 2 : 4),
+                                Text(
+                                  rating.toStringAsFixed(1),
+                                  style: TextStyle(
+                                    color: secondaryTextColor,
+                                    fontSize: isCompact ? 10 : 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                if (reviewCount > 0) ...[
+                                  SizedBox(width: isCompact ? 1 : 2),
+                                  Text(
+                                    '($reviewCount)',
+                                    style: TextStyle(
+                                      color: tertiaryTextColor,
+                                      fontSize: isCompact ? 8 : 10,
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                            if (nurse.isVerified)
+                              Padding(
+                                padding: EdgeInsets.only(top: isCompact ? 2 : 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Iconsax.shield_tick, color: Colors.green, size: isCompact ? 10 : 12),
+                                    SizedBox(width: isCompact ? 1 : 2),
+                                    Text(
+                                      'Verified',
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: isCompact ? 8 : 10,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // Spacer to push location to bottom in fixed height scenarios
+                  if (height != null) Expanded(child: Container()),
+
+                  SizedBox(height: isCompact ? 6 : 8),
+
+                  // Location
+                  Row(
+                    children: [
+                      Icon(Icons.location_on, color: tertiaryTextColor, size: isCompact ? 12 : 14),
+                      SizedBox(width: isCompact ? 2 : 4),
+                      Expanded(
+                        child: Text(
+                          "${nurse.city ?? ''}${nurse.city != null && nurse.state != null ? ', ' : ''}${nurse.state ?? ''}",
+                          style: TextStyle(
+                            fontSize: isCompact ? 10 : 12,
+                            color: secondaryTextColor,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: isCompact ? 2 : 4),
+
+                  // Workplace or Age
+                  if (nurse.workplace != null && nurse.workplace!.isNotEmpty)
+                    Row(
+                      children: [
+                        Icon(Iconsax.building, color: tertiaryTextColor, size: isCompact ? 12 : 14),
+                        SizedBox(width: isCompact ? 2 : 4),
+                        Expanded(
+                          child: Text(
+                            nurse.workplace!,
+                            style: TextStyle(
+                              fontSize: isCompact ? 9 : 11,
+                              color: tertiaryTextColor,
+                              fontStyle: FontStyle.italic,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ],
+                    )
+                  else if (nurse.age != null)
+                    Row(
+                      children: [
+                        Icon(Iconsax.user, color: tertiaryTextColor, size: isCompact ? 12 : 14),
+                        SizedBox(width: isCompact ? 2 : 4),
+                        Text(
+                          '${nurse.age} years old',
+                          style: TextStyle(
+                            fontSize: isCompact ? 9 : 11,
+                            color: tertiaryTextColor,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-              ],
-            )
-          else if (nurse.age != null)
-            Row(
-              children: [
-                Icon(Iconsax.user, color: tertiaryTextColor, size: 14),
-                const SizedBox(width: 4),
-                Text(
-                  '${nurse.age} years old',
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: tertiaryTextColor,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ],
-            ),
-        ],
+                ],
+              );
+            },
+          ),
+        ),
       ),
-    );
-
-    // Optionally wrap in SizedBox for fixed height if provided
-    if (height != null) {
-      cardContent = SizedBox(
-        height: height,
-        child: cardContent,
-      );
-    }
-
-    return GestureDetector(
-      onTap: onCardTap ?? () {},
-      child: cardContent,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../data/services/nurse_services.dart';
 import '../../authentication/models/nurse_model.dart';
@@ -10,31 +11,46 @@ class NurseController extends GetxController {
 
   // In NurseController class
   final RxBool isLoading = false.obs;
+  final RxString errorMessage = ''.obs;
 
-// Update loadAllNurses method
+  final searchQuery = ''.obs;
+  final selectedFilter = 'All'.obs;
+
+  final TextEditingController searchTextController = TextEditingController();
+
+  @override
+  void onInit() {
+    super.onInit();
+    searchTextController.addListener(() {
+      updateSearchQuery(searchTextController.text);
+    });
+    loadAllNurses();
+  }
+
+  @override
+  void onClose() {
+    searchTextController.dispose();
+    super.onClose();
+  }
+
+  // Update loadAllNurses method
   Future<void> loadAllNurses() async {
     isLoading.value = true;
+    errorMessage.value = '';
     try {
       allNurses.value = await _nurseService.getAllNurses();
     } catch (e) {
       print('Error loading nurses: $e');
-      // Optionally show a snackbar: Get.snackbar('Error', 'Failed to load nurses');
+      errorMessage.value = 'Failed to load nurses. Please check your connection.';
+      // Optionally show a snackbar: Get.snackbar('Error', errorMessage.value);
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Reactive search query and selected filter.
-  final searchQuery = ''.obs;
-  final selectedFilter = 'All'.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    loadAllNurses();
+  void clearError() {
+    errorMessage.value = '';
   }
-
-
 
   // Update search query.
   void updateSearchQuery(String query) {

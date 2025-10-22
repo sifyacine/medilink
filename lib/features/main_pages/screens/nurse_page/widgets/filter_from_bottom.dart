@@ -8,7 +8,7 @@ class FilterBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<NurseController>(); // Use find to get existing instance
+    final controller = Get.find<NurseController>();
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -23,41 +23,23 @@ class FilterBottomSheet extends StatelessWidget {
             leading: Icon(Icons.filter_list),
           ),
           const Divider(),
-          ListTile(
-            title: const Text("All"),
-            leading: const Icon(Icons.all_inclusive),
+          // Filter options with consistent styling
+          ...[
+            {"title": "All", "icon": Icons.all_inclusive, "filter": "All"},
+            {"title": "ICU", "icon": Icons.local_hospital, "filter": "ICU"},
+            {"title": "Pediatrics", "icon": Icons.child_care, "filter": "Pediatrics"},
+            // Add more as needed
+            // {"title": "Cardiology", "icon": Icons.favorite, "filter": "Cardiology"},
+          ].map((filterOption) => ListTile(
+            title: Text(filterOption["title"] as String),
+            leading: Icon(filterOption["icon"] as IconData),
             onTap: () {
-              controller.updateFilter("All");
+              controller.updateFilter(filterOption["filter"] as String);
               Navigator.pop(context);
             },
-          ),
-          ListTile(
-            title: const Text("ICU"),
-            leading: const Icon(Icons.local_hospital),
-            onTap: () {
-              controller.updateFilter("ICU");
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: const Text("Pediatrics"),
-            leading: const Icon(Icons.child_care),
-            onTap: () {
-              controller.updateFilter("Pediatrics");
-              Navigator.pop(context);
-            },
-          ),
-          // Add more filter options as needed, e.g.:
-          // ListTile(
-          //   title: const Text("Cardiology"),
-          //   leading: const Icon(Icons.favorite),
-          //   onTap: () {
-          //     controller.updateFilter("Cardiology");
-          //     Navigator.pop(context);
-          //   },
-          // ),
+          )),
           const SizedBox(height: 16),
-          // Clear Filter Button (optional)
+          // Clear Filter Button
           TextButton(
             onPressed: () {
               controller.updateFilter("All");
