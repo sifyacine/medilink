@@ -19,7 +19,11 @@ class UserModel {
   String? gender;
   Map<String, String>? emergencyContact;
   String? address;
-  String? role; // Added role field
+  String? role;
+
+  // Added rating fields for patients
+  double? rating;
+  int? reviewCount;
 
   UserModel({
     required this.id,
@@ -38,7 +42,9 @@ class UserModel {
     this.gender,
     this.emergencyContact,
     this.address,
-    this.role, // Added to constructor
+    this.role,
+    this.rating,
+    this.reviewCount = 0,
   });
 
   // Factory constructor to create a UserModel from a JSON map (for Supabase)
@@ -60,7 +66,9 @@ class UserModel {
       gender: json['gender'] as String?,
       emergencyContact: json['emergency_contact'] != null ? Map<String, String>.from(json['emergency_contact']) : null,
       address: json['address'] as String?,
-      role: json['role'] as String?, // Added role mapping
+      role: json['role'] as String?,
+      rating: json['rating'] != null ? (json['rating'] as num).toDouble() : null,
+      reviewCount: json['reviewCount'] as int? ?? 0,
     );
   }
 
@@ -75,7 +83,7 @@ class UserModel {
         email: data['email'] ?? "",
         phoneNumber: data['phoneNumber'] ?? "",
         medicalFolderUrl: data['medical_folder_url'] as String?,
-        profilePicUrl: data['ProfilePicture'] as String?, // Changed from 'profile_pic_url' to 'ProfilePicture'
+        profilePicUrl: data['ProfilePicture'] as String?,
         dateOfBirth: data['date_of_birth'] != null ? DateTime.parse(data['date_of_birth']) : null,
         city: data['city'] as String?,
         state: data['state'] as String?,
@@ -85,6 +93,8 @@ class UserModel {
         emergencyContact: data['emergency_contact'] != null ? Map<String, String>.from(data['emergency_contact']) : null,
         address: data['address'] as String?,
         role: data['role'] as String?,
+        rating: data['rating'] != null ? (data['rating'] as num).toDouble() : null,
+        reviewCount: data['reviewCount'] as int? ?? 0,
       );
     } else {
       throw Exception('Document data is null');
@@ -110,7 +120,9 @@ class UserModel {
       'gender': gender,
       'emergency_contact': emergencyContact,
       'address': address,
-      'role': role, // Added role to JSON
+      'role': role,
+      'rating': rating,
+      'reviewCount': reviewCount,
     };
   }
 
@@ -141,7 +153,9 @@ class UserModel {
     email: '',
     phoneNumber: '',
     profilePicUrl: '',
-    role: null, // Added to empty model
+    role: null,
+    rating: null,
+    reviewCount: 0,
   );
 
   // Override toString for easy debugging
@@ -149,6 +163,7 @@ class UserModel {
   String toString() {
     return 'UserModel{id: $id, firstName: $firstName, lastName: $lastName, username: $username, email: $email, phoneNumber: $phoneNumber, '
         'medicalFolderUrl: $medicalFolderUrl, profilePicUrl: $profilePicUrl, dateOfBirth: $dateOfBirth, city: $city, state: $state, '
-        'description: $description, bloodType: $bloodType, gender: $gender, emergencyContact: $emergencyContact, address: $address, role: $role}';
+        'description: $description, bloodType: $bloodType, gender: $gender, emergencyContact: $emergencyContact, address: $address, '
+        'role: $role, rating: $rating, reviewCount: $reviewCount}';
   }
 }

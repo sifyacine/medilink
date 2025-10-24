@@ -71,7 +71,7 @@ class NurseCard extends StatelessWidget {
                       clipBehavior: Clip.none,
                       children: [
                         CircleAvatar(
-                          radius: isCompact ? 24 : 32,
+                          radius: isCompact ? 36 : 48,
                           backgroundImage: avatarImage,
                           backgroundColor: TColors.primary.withOpacity(0.1),
                         ),

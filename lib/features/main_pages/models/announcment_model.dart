@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-
 enum DeplacementType { oneTime, daily, weekly, monthly }
 
 /// Helper functions to convert TimeOfDay to/from a Map for Firestore.
@@ -134,4 +133,19 @@ class Announcement {
       status: data['status'] ?? "Pending",
     );
   }
+
+  /// Empty announcement model
+  static Announcement empty() => Announcement(
+    uid: '',
+    publisherId: '',
+    startDate: DateTime.now(),
+    additionalNotes: '',
+    state: '',
+    city: '',
+    startTime: const TimeOfDay(hour: 0, minute: 0),
+    endTime: const TimeOfDay(hour: 0, minute: 0),
+    targetAudience: 'All',
+    isActive: false,
+    status: 'Pending',
+  );
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:medilink/features/personalization/controllers/user_controller.dart';
 import 'package:medilink/utils/constants/colors.dart';
 
 import '../../../../../common/widgets/appbar/appbar.dart';
@@ -13,6 +15,7 @@ class THomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
     final textTheme = Theme.of(context).textTheme;
+    final controller = Get.put(UserController());
 
     return TAppBar(
       title: Row(
@@ -38,7 +41,7 @@ class THomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'Djelida, Ain-Defla',
+                      "${controller.user.value.city?? "Unknown"}, ${controller.user.value.state?? "Unknown"}",
                       style: textTheme.titleSmall,
                     ),
                     const SizedBox(width: 4),

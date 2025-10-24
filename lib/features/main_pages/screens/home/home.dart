@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:medilink/common/widgets/doctors/doctor_card_vertical.dart';
-import 'package:medilink/common/widgets/products/product_cards/product_cards_vertical.dart';
-import 'package:medilink/data/dummy_data.dart';
-import 'package:medilink/features/main_pages/models/doctor_model.dart';
+import 'package:medilink/features/main_pages/controllers/nurse_controller.dart';
+import 'package:medilink/features/main_pages/screens/home/widgets/nurse_card.dart';
+import 'package:medilink/features/main_pages/screens/nurse_page/nurse_page.dart';
 import 'package:medilink/features/main_pages/screens/home/widgets/home_appbar.dart';
 import 'package:medilink/features/main_pages/screens/home/widgets/home_categories.dart';
 import 'package:medilink/features/main_pages/screens/home/widgets/home_search_bar.dart';
@@ -13,30 +13,12 @@ import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
-import '../../models/medicine_model.dart';
-import '../all_doctors/all-doctors.dart';
+import '../nurse_details_page/nurse_details_page.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  final List<Product> products = [
-    product1,
-    product2,
-    product3,
-    product4,
-    product5,
-    product6,
-  ];
-  // List of doctors with bios
-  final List<Doctor> doctors = [
-    doctor1,
-    doctor2,
-    doctor3,
-    doctor4,
-    doctor5,
-    doctor6,
-    doctor7,
-    doctor8,
-  ];
+
+  final NurseController nurseController = Get.put(NurseController());
 
   @override
   Widget build(BuildContext context) {
@@ -96,95 +78,176 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
 
-            /// popular nurses
+            /// Popular Nurses Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TSectionHeading(
-                    title: 'Popular nurses',
+                    title: 'Popular Nurses',
                     showActionButton: true,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => AllDoctorsScreen(doctors: doctors),
-                        ),
-                      );
+                      // Navigate to NursePage
+                      Get.to(() => const NursePage());
                     },
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  SizedBox(
-                    height: 250,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        final doctor = doctors[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: TDoctorCardsVertical(
-                            name: doctor.fullName,
-                            specialty: doctor.medicalSpecialty.toString(),
-                            rating: 4.3,
-                            distance: "1 KM",
-                            imageUrl: doctor.doctorPic,
-                          ),
-                        );
-                      },
+
+                  // Nurses List with GetX Observer
+                  Obx(() {
+                    if (nurseController.isLoading.value) {
+                      return _buildLoadingShimmer();
+                    }
+
+                    if (nurseController.errorMessage.isNotEmpty) {
+                      return _buildErrorWidget();
+                    }
+
+                    final nurses = nurseController.filteredNurses.take(3).toList();
+
+                    if (nurses.isEmpty) {
+                      return _buildEmptyWidget();
+                    }
+
+                    return SizedBox(
+                      height: 250,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: nurses.length,
+                        itemBuilder: (context, index) {
+                          final nurse = nurses[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: NurseCardVertical(
+                              nurse: nurse,
+                              onTap: () {
+                                // Navigate to nurse details
+                                Get.to(() => NurseDetailsPage(nurse: nurse));
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: TSizes.spaceBtwSections),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Loading Shimmer Widget
+  Widget _buildLoadingShimmer() {
+    return SizedBox(
+      height: 250,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Container(
+              width: 180,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image placeholder
+                  Container(
+                    height: 120,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(12),
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  // Text placeholders
+                  Container(
+                    height: 16,
+                    width: 100,
+                    color: Colors.grey[300],
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                  const SizedBox(height: 4),
+                  Container(
+                    height: 14,
+                    width: 80,
+                    color: Colors.grey[300],
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                  const SizedBox(height: 4),
+                  Container(
+                    height: 14,
+                    width: 60,
+                    color: Colors.grey[300],
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
                   ),
                 ],
               ),
             ),
-            /// recent orders
+          );
+        },
+      ),
+    );
+  }
 
-            /// popular products
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TSectionHeading(
-                    title: 'Popular doctors',
-                    showActionButton: true,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => AllDoctorsScreen(doctors: doctors),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwItems),
-                  SizedBox(
-                    height: 250,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        final product = products[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: TProductCardVertical(
-                            title: product.name,
-                            discount: product.reductionPercentage.toString(),
-                            onFavoriteTap: (){},
-                            onTap: (){},
-                            onAdd: (){},
-                            price: product.price,
-                            imageUrl: product.imageUrl,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+  // Error Widget
+  Widget _buildErrorWidget() {
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline, size: 48, color: Colors.grey),
+            const SizedBox(height: 8),
+            Text(
+              nurseController.errorMessage.value,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () => nurseController.loadAllNurses(),
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Empty Widget
+  Widget _buildEmptyWidget() {
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.people_outline, size: 48, color: Colors.grey),
+            SizedBox(height: 8),
+            Text(
+              'No nurses available',
+              style: TextStyle(color: Colors.grey),
             ),
           ],
         ),

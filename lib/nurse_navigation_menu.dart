@@ -8,6 +8,7 @@ import 'package:medilink/utils/helpers/helper_functions.dart';
 import 'features/chat/screens/main_chat/conversations_page.dart';
 import 'features/main_pages/screens/apointments/planning_page.dart';
 import 'features/main_pages/screens/home/home.dart';
+import 'features/main_pages/screens/reservation/reservation_page.dart';
 import 'features/nurse_pages/screens/earnings/earnings_page.dart';
 import 'features/nurse_pages/screens/home/home_screen.dart';
 import 'features/nurse_pages/screens/request_page.dart';
@@ -70,7 +71,7 @@ class NavigationController extends GetxController {
   final screens = [
     NurseHomeScreen(),
     BrowseRequestScreen(),
-    NurseEarningsScreen(),
+    NurseMainPage(),
     SettingsPage(),
   ];
 }
